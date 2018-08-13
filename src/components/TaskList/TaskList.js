@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
+import TaskListItem from '../TaskListItem/TaskListItem';
 
-const TaskList = () => <p>Hello!</p>
+const TaskList = ({ tasks }) => tasks.map(task => <TaskListItem text={task} />);
 
 export default TaskList;
