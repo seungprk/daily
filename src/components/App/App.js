@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import TaskListContainer from '../../containers/TaskListContainer';
-import Controls from '../Controls/Controls';
+import ControlsContainer from '../../containers/ControlsContainer';
 
 const App = () => (
   <div className="App">
@@ -12,7 +12,7 @@ const App = () => (
         Welcome to React
       </h1>
     </header>
-    <Controls />
+    <ControlsContainer />
     <TaskListContainer />
   </div>
 );
