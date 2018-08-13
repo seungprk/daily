@@ -1,9 +1,12 @@
-const tasks = (state = ['Task A', 'Task B', 'Task C'], action) => {
+const tasks = (state = [], action) => {
   switch (action.type) {
     case 'ADD_TASK':
       return [
         ...state,
-        action.task,
+        {
+          id: action.id,
+          text: action.task,
+        },
       ];
     default:
       return state;
