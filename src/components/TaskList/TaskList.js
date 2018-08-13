@@ -5,8 +5,7 @@ import TaskListItem from '../TaskListItem/TaskListItem';
 const TaskList = ({ tasks, toggleTask, deleteTask }) => tasks.map(task => (
   <TaskListItem
     key={task.id}
-    id={task.id}
-    text={task.text}
+    task={task}
     toggleTask={toggleTask}
     deleteTask={deleteTask}
   />
