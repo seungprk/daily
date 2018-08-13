@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import TaskList from '../TaskList/TaskList';
+import TaskListContainer from '../../containers/TaskListContainer';
 
 const App = () => (
   <div className="App">
@@ -11,7 +11,7 @@ const App = () => (
         Welcome to React
       </h1>
     </header>
-    <TaskList tasks={['Do A', 'Do B', 'Do C']} />
+    <TaskListContainer />
   </div>
 );
 
