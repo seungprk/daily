@@ -3,15 +3,23 @@ import TaskList from '../components/TaskList/TaskList';
 import { patchThenToggleTask, reqThenDeleteTask } from '../actions/tasks';
 
 const mapStateToProps = state => ({
+  user: state.user,
   tasks: state.tasks,
 });
 
-const mapDispatchToProps = dispatch => ({
-  toggleTask: id => dispatch(patchThenToggleTask(id)),
-  deleteTask: id => dispatch(reqThenDeleteTask(id)),
-});
+const mergeProps = (stateProps, dispatchProps) => {
+  const { user, tasks } = stateProps;
+  const { dispatch } = dispatchProps;
+
+  return {
+    tasks,
+    toggleTask: taskId => dispatch(patchThenToggleTask(taskId, user)),
+    deleteTask: taskId => dispatch(reqThenDeleteTask(taskId, user)),
+  };
+};
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  null,
+  mergeProps,
 )(TaskList);

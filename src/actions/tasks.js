@@ -51,9 +51,9 @@ const toggleTask = (id) => {
   return action;
 };
 
-export const patchThenToggleTask = (task, userId) => dispatch => patchToggle(task.id, userId)
+export const patchThenToggleTask = (taskId, userId) => dispatch => patchToggle(taskId, userId)
   .then(
-    () => dispatch(toggleTask(task)),
+    () => dispatch(toggleTask(taskId)),
     error => alert(error),
   );
 

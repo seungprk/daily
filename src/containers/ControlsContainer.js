@@ -2,11 +2,21 @@ import { connect } from 'react-redux';
 import Controls from '../components/Controls/Controls';
 import { postThenAddTask } from '../actions/tasks';
 
-const mapDispatchToProps = dispatch => ({
-  addTask: text => dispatch(postThenAddTask(text)),
+const mapStateToProps = state => ({
+  user: state.user,
 });
 
+const mergeProps = (stateProps, dispatchProps) => {
+  const { user } = stateProps;
+  const { dispatch } = dispatchProps;
+
+  return {
+    addTask: text => dispatch(postThenAddTask(text, user)),
+  };
+};
+
 export default connect(
+  mapStateToProps,
   null,
-  mapDispatchToProps,
+  mergeProps,
 )(Controls);
