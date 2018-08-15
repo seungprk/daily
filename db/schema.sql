@@ -9,5 +9,5 @@ CREATE TABLE tasks (
   users_id INTEGER NOT NULL,
   text VARCHAR(200),
   completed BOOLEAN DEFAULT FALSE,
-  date DATE
+  date DATE NOT NULL
 );

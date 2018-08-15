@@ -1,4 +1,19 @@
 /* eslint no-alert: 0 */
+
+const getTasks = userId => fetch(`users/${userId}/tasks`)
+  .then(res => res.json());
+
+const loadTasks = (tasks) => {
+  const action = {
+    type: 'LOAD_TASKS',
+    tasks,
+  };
+  return action;
+};
+
+export const getThenLoadTasks = userId => dispatch => getTasks(userId)
+  .then(tasks => dispatch(loadTasks(tasks)));
+
 const postTask = (task, userId) => fetch(`/users/${userId}/tasks`, {
   method: 'POST',
   headers: {

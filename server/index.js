@@ -15,6 +15,11 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../build', 'index.html'));
 });
 
+app.get('/users/:userId/tasks/', (req, res) => {
+  Task.getTasks(req.params.userId)
+    .then(tasks => res.send(JSON.stringify(tasks)));
+});
+
 app.post('/users/:userId/tasks/', (req, res) => {
   Task.addTask(req.body, req.params.userId)
     .then(taskId => res.status(201).send(taskId.toString()));
