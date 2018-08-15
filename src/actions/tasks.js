@@ -21,10 +21,11 @@ const addTask = (task) => {
 };
 
 export const postThenAddTask = (text, userId) => (dispatch) => {
+  const now = new Date(Date.now());
   const task = {
     id: nextTaskId,
     text,
-    timestamp: Date.now(),
+    date: `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`,
     completed: false,
   };
   nextTaskId += 1;
