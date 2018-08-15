@@ -9,3 +9,5 @@ exports.addTask = (task, userId) => pool.query('INSERT INTO tasks (users_id, tex
   task.date,
 ])
   .then(res => res.rows[0].id);
+
+exports.toggleTask = userId => pool.query('UPDATE tasks SET completed = NOT completed WHERE id = $1', [userId]);

@@ -20,6 +20,11 @@ app.post('/users/:userId/tasks/', (req, res) => {
     .then(taskId => res.status(201).send(taskId.toString()));
 });
 
+app.patch('/users/:userId/tasks/:taskId', (req, res) => {
+  Task.toggleTask(req.params.taskId)
+    .then(() => res.sendStatus(204));
+});
+
 app.listen(PORT, () => {
   console.log(`Listening at ${PORT}...`);
 });

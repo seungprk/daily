@@ -1,6 +1,4 @@
 /* eslint no-alert: 0 */
-let nextTaskId = 0;
-
 const postTask = (task, userId) => fetch(`/users/${userId}/tasks`, {
   method: 'POST',
   headers: {
@@ -10,6 +8,7 @@ const postTask = (task, userId) => fetch(`/users/${userId}/tasks`, {
 })
   .then((response) => {
     if (response.status !== 201) throw new Error('Post failed');
+    return response.json();
   });
 
 const addTask = (task) => {
@@ -23,16 +22,19 @@ const addTask = (task) => {
 export const postThenAddTask = (text, userId) => (dispatch) => {
   const now = new Date(Date.now());
   const task = {
-    id: nextTaskId,
     text,
     date: `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`,
     completed: false,
   };
-  nextTaskId += 1;
+
+  const handleSuccess = (taskId) => {
+    task.id = taskId;
+    dispatch(addTask(task));
+  };
 
   return postTask(task, userId)
     .then(
-      () => dispatch(addTask(task)),
+      handleSuccess,
       error => alert(error),
     );
 };
