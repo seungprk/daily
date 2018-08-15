@@ -25,6 +25,11 @@ app.patch('/users/:userId/tasks/:taskId', (req, res) => {
     .then(() => res.sendStatus(204));
 });
 
+app.delete('/users/:userId/tasks/:taskId', (req, res) => {
+  Task.deleteTask(req.params.taskId)
+    .then(() => res.sendStatus(200));
+});
+
 app.listen(PORT, () => {
   console.log(`Listening at ${PORT}...`);
 });
