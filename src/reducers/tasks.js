@@ -3,11 +3,7 @@ const tasks = (state = [], action) => {
     case 'ADD_TASK':
       return [
         ...state,
-        {
-          id: action.id,
-          text: action.text,
-          completed: false,
-        },
+        action.task,
       ];
     case 'TOGGLE_TASK':
       return state.map((task) => {

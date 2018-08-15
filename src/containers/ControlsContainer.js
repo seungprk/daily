@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import Controls from '../components/Controls/Controls';
-import { addTask } from '../actions/tasks';
+import { postThenAddTask } from '../actions/tasks';
 
 const mapDispatchToProps = dispatch => ({
-  addTask: text => dispatch(addTask(text)),
+  addTask: text => dispatch(postThenAddTask(text)),
 });
 
 export default connect(
