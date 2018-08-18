@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../build', 'index.html'));
 });
 
-app.post('/users/', (req, res) => {
+app.post('/login', (req, res) => {
   const { username, password } = req.body;
   User.getIfValid(username, password)
     .then((user) => {
@@ -35,12 +35,22 @@ app.post('/users/', (req, res) => {
     });
 });
 
-app.get('/users/:userId/tasks/', (req, res) => {
+app.post('/users', (req, res) => {
+  const { username, email, password } = req.body;
+  User.create(username, email, password)
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(400);
+    })
+    .then(() => res.sendStatus(201));
+});
+
+app.get('/users/:userId/tasks', (req, res) => {
   Task.getTasks(req.params.userId)
     .then(tasks => res.send(JSON.stringify(tasks)));
 });
 
-app.post('/users/:userId/tasks/', (req, res) => {
+app.post('/users/:userId/tasks', (req, res) => {
   Task.addTasks(req.body, req.params.userId)
     .then(taskIds => res.status(201).send(JSON.stringify(taskIds)));
 });
@@ -54,7 +64,6 @@ app.delete('/users/:userId/tasks/:taskId', (req, res) => {
   Task.deleteTask(req.params.taskId)
     .then(() => res.sendStatus(200));
 });
-
 
 app.listen(PORT, () => {
   console.log(`Listening at ${PORT}...`);

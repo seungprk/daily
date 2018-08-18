@@ -5,39 +5,18 @@ exports.getIfValid = (username, password) => pool.query('SELECT * FROM users WHE
   .then((res) => {
     const userData = res.rows[0];
     if (userData) {
-      const passIsValid = bcrypt.compareSync(userData.password, password);
+      const passIsValid = bcrypt.compare(userData.password, password);
       if (passIsValid) return userData;
     }
     return null;
   });
 
-exports.getTasks = userId => pool.query('SELECT * FROM tasks WHERE users_id = $1 ORDER BY id', [userId])
-  .then(res => res.rows.map(task => ({
-    id: task.id,
-    text: task.text,
-    completed: task.completed,
-    date: Date.parse(task.date),
-  })));
-
-exports.addTasks = (tasks, userId) => {
-  let counter = 1;
-  const queryValues = [];
-  let queryStr = 'INSERT INTO tasks (users_id, text, date) VALUES';
-
-  tasks.forEach((task) => {
-    queryStr += ` ($${counter}, $${counter + 1}, $${counter + 2}),`;
-    const taskItems = [userId, task.text, task.date];
-    queryValues.push(...taskItems);
-    counter += 3;
-  });
-
-  queryStr = queryStr.slice(0, -1);
-  queryStr += ' RETURNING id';
-
-  return pool.query(queryStr, queryValues)
-    .then(res => res.rows.map(row => row.id));
+exports.create = (username, email, password) => {
+  const saltRounds = 10;
+  return bcrypt.hash(password, saltRounds)
+    .then(hash => pool.query('INSERT INTO users (username, email, password) VALUES ($1, $2, $3)', [
+      username,
+      email,
+      hash,
+    ]));
 };
-
-exports.toggleTask = taskId => pool.query('UPDATE tasks SET completed = NOT completed WHERE id = $1', [taskId]);
-
-exports.deleteTask = taskId => pool.query('DELETE FROM tasks WHERE id = $1', [taskId]);
