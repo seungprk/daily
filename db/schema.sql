@@ -7,7 +7,7 @@ CREATE TABLE users (
 CREATE TABLE tasks (
   id SERIAL PRIMARY KEY,
   users_id INTEGER NOT NULL,
-  text VARCHAR(200),
+  text VARCHAR(200) NOT NULL,
   completed BOOLEAN DEFAULT FALSE,
   date DATE NOT NULL
 );

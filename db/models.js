@@ -11,12 +11,15 @@ exports.getTasks = userId => pool.query('SELECT * FROM tasks WHERE users_id = $1
     date: Date.parse(task.date),
   })));
 
-exports.addTask = (task, userId) => pool.query('INSERT INTO tasks (users_id, text, date) VALUES ($1, $2, $3) RETURNING id', [
-  userId,
-  task.text,
-  task.date,
-])
-  .then(res => res.rows[0].id);
+exports.addTasks = (tasks, userId) => {
+  const promises = tasks.map(task => pool.query('INSERT INTO tasks (users_id, text, date) VALUES ($1, $2, $3) RETURNING id', [
+    userId,
+    task.text,
+    task.date,
+  ]));
+  return Promise.all(promises)
+    .then(responses => responses.map(res => res.rows[0].id));
+};
 
 exports.toggleTask = taskId => pool.query('UPDATE tasks SET completed = NOT completed WHERE id = $1', [taskId]);
 

@@ -2,10 +2,10 @@ const tasks = (state = [], action) => {
   switch (action.type) {
     case 'LOAD_TASKS':
       return action.tasks;
-    case 'ADD_TASK':
+    case 'ADD_TASKS':
       return [
         ...state,
-        action.task,
+        ...action.tasks,
       ];
     case 'TOGGLE_TASK':
       return state.map((task) => {

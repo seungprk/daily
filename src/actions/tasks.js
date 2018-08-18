@@ -14,24 +14,44 @@ const loadTasks = (tasks) => {
 export const getThenLoadTasks = userId => dispatch => getTasks(userId)
   .then(tasks => dispatch(loadTasks(tasks)));
 
-const postTask = (task, userId) => fetch(`/users/${userId}/tasks`, {
+const postTasks = (tasks, userId) => fetch(`/users/${userId}/tasks`, {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json; charset=utf-8',
   },
-  body: JSON.stringify(task),
+  body: JSON.stringify(tasks),
 })
   .then((response) => {
     if (response.status !== 201) throw new Error('Post failed');
     return response.json();
   });
 
-const addTask = (task) => {
+const addTasks = (tasks) => {
   const action = {
-    type: 'ADD_TASK',
-    task,
+    type: 'ADD_TASKS',
+    tasks,
   };
   return action;
+};
+
+export const postThenCopyTasks = (tasks, userId) => (dispatch) => {
+  const now = new Date(Date.now());
+  const newTasks = tasks.map(task => ({
+    ...task,
+    date: `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`,
+    completed: false,
+  }));
+
+  const handleSuccess = (taskIds) => {
+    const idTasks = newTasks.map((task, index) => ({ ...task, id: taskIds[index] }));
+    dispatch(addTasks(idTasks));
+  };
+
+  return postTasks(newTasks, userId)
+    .then(
+      handleSuccess,
+      error => alert(error),
+    );
 };
 
 export const postThenAddTask = (text, userId) => (dispatch) => {
@@ -42,12 +62,12 @@ export const postThenAddTask = (text, userId) => (dispatch) => {
     completed: false,
   };
 
-  const handleSuccess = (taskId) => {
-    task.id = taskId;
-    dispatch(addTask(task));
+  const handleSuccess = (taskIds) => {
+    [task.id] = taskIds;
+    dispatch(addTasks([task]));
   };
 
-  return postTask(task, userId)
+  return postTasks([task], userId)
     .then(
       handleSuccess,
       error => alert(error),

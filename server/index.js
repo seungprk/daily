@@ -21,8 +21,8 @@ app.get('/users/:userId/tasks/', (req, res) => {
 });
 
 app.post('/users/:userId/tasks/', (req, res) => {
-  Task.addTask(req.body, req.params.userId)
-    .then(taskId => res.status(201).send(taskId.toString()));
+  Task.addTasks(req.body, req.params.userId)
+    .then(taskIds => res.status(201).send(JSON.stringify(taskIds)));
 });
 
 app.patch('/users/:userId/tasks/:taskId', (req, res) => {
