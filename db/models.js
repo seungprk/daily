@@ -3,7 +3,7 @@ const { Pool } = require('pg');
 const pool = new Pool();
 pool.connect();
 
-exports.getTasks = userId => pool.query('SELECT * FROM tasks WHERE users_id = $1', [userId])
+exports.getTasks = userId => pool.query('SELECT * FROM tasks WHERE users_id = $1 ORDER BY id', [userId])
   .then(res => res.rows.map(task => ({
     id: task.id,
     text: task.text,
