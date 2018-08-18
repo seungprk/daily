@@ -26,8 +26,12 @@ app.post('/users/', (req, res) => {
   const { username, password } = req.body;
   User.getIfValid(username, password)
     .then((user) => {
-      if (user) req.session.user = user;
-      else res.sendStatus(401);
+      if (user) {
+        req.session.user = user;
+        res.sendStatus(201);
+      } else {
+        res.sendStatus(401);
+      }
     });
 });
 
