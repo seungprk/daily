@@ -1,7 +1,4 @@
-const { Pool } = require('pg');
-
-const pool = new Pool();
-pool.connect();
+const pool = require('../connection.js');
 
 exports.getTasks = userId => pool.query('SELECT * FROM tasks WHERE users_id = $1 ORDER BY id', [userId])
   .then(res => res.rows.map(task => ({
