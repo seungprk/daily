@@ -10,14 +10,18 @@ class TaskList extends React.Component {
 
   render() {
     const { tasks, toggleTask, deleteTask } = this.props;
-    return tasks.map(task => (
+    const createTaskListItem = task => (
       <TaskListItem
         key={task.id}
         task={task}
         toggleTask={toggleTask}
         deleteTask={deleteTask}
       />
-    ));
+    );
+
+    const activeTasks = tasks.filter(task => !task.completed).map(createTaskListItem);
+    const completedTasks = tasks.filter(task => task.completed).map(createTaskListItem);
+    return activeTasks.concat(completedTasks);
   }
 }
 
