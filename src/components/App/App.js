@@ -4,17 +4,20 @@ import './App.css';
 import TaskListContainer from '../../containers/TaskListContainer';
 import ControlsContainer from '../../containers/ControlsContainer';
 
-const App = () => (
-  <div className="App">
-    <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
-      <h1 className="App-title">
-        Daily!
-      </h1>
-    </header>
-    <ControlsContainer />
-    <TaskListContainer />
-  </div>
-);
+const App = () => {
+  const today = new Date(Date.now());
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <h1 className="App-title">
+          Daily!
+        </h1>
+      </header>
+      <ControlsContainer />
+      <TaskListContainer targetDate={today} />
+    </div>
+  );
+};
 
 export default App;
