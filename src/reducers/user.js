@@ -1,7 +1,7 @@
-const users = (state = 0, action) => {
+const users = (state = null, action) => {
   switch (action.type) {
     case 'SET_USER':
-      return action.userId;
+      return action.user;
     default:
       return state;
   }
