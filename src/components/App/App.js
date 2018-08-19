@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import TaskListContainer from '../../containers/TaskListContainer';
 import ControlsContainer from '../../containers/ControlsContainer';
+import Login from '../Login/Login';
 
 const App = () => {
   const today = new Date(Date.now());
@@ -14,6 +15,7 @@ const App = () => {
           Daily!
         </h1>
       </header>
+      <Login />
       <ControlsContainer />
       <TaskListContainer targetDate={today} />
     </div>

@@ -27,11 +27,11 @@ class Login extends React.Component {
   }
 
   handleChange(e) {
-    if (e.type === 'text') {
+    if (e.target.type === 'text') {
       this.setState({ username: e.target.value });
-    } else if (e.type === 'email') {
+    } else if (e.target.type === 'email') {
       this.setState({ email: e.target.value });
-    } else if (e.type === 'password') {
+    } else if (e.target.type === 'password') {
       this.setState({ password: e.target.value });
     }
   }
@@ -41,9 +41,18 @@ class Login extends React.Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <input type="text" value={username} onChange={this.handleChange} />
-          <input type="email" value={email} onChange={this.handleChange} />
-          <input type="password" value={password} onChange={this.handleChange} />
+          <label htmlFor="username">
+            Username
+            <input id="username" type="text" value={username} onChange={this.handleChange} />
+          </label>
+          <label htmlFor="email">
+            Email
+            <input id="email" type="email" value={email} onChange={this.handleChange} />
+          </label>
+          <label htmlFor="password">
+            Password
+            <input id="password" type="password" value={password} onChange={this.handleChange} />
+          </label>
           <button type="button">
             Submit
           </button>
