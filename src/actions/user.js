@@ -66,3 +66,12 @@ export const logOut = () => {
   };
   return action;
 };
+
+export const checkLogin = () => dispatch => fetch('/login')
+  .then(res => res.json())
+  .then((user) => {
+    if (user) {
+      dispatch(setUser(user));
+      dispatch(getThenLoadTasks(user.id));
+    }
+  });

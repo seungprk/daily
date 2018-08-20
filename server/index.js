@@ -22,6 +22,12 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../build', 'index.html'));
 });
 
+app.get('/login', (req, res) => {
+  const { user } = req.session;
+  if (user) res.status(200).send(JSON.stringify(user));
+  else res.sendStatus(400);
+});
+
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
   User.getIfValid(username, password)
