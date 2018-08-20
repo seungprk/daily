@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Login from '../components/Login/Login';
-import { postThenSetUser } from '../actions/user.js';
+import { createThenSetUser, loginThenSetUser } from '../actions/user.js';
 
 const mapStateToProps = state => ({
   user: state.user,
@@ -12,7 +12,11 @@ const mapDispatchToProps = dispatch => ({
     username,
     email,
     password,
-  ) => dispatch(postThenSetUser(username, email, password)),
+  ) => dispatch(createThenSetUser(username, email, password)),
+  loginUser: (
+    username,
+    password,
+  ) => dispatch(loginThenSetUser(username, password)),
 });
 
 export default connect(

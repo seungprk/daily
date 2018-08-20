@@ -1,6 +1,6 @@
 /* eslint no-alert: 0 */
 
-const postUser = (username, email, password) => fetch('/users', {
+const createUser = (username, email, password) => fetch('/users', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json; charset=utf-8',
@@ -20,14 +20,39 @@ const setUser = (user) => {
   return action;
 };
 
-export const postThenSetUser = (username, email, password) => (dispatch) => {
+export const createThenSetUser = (username, email, password) => (dispatch) => {
   const user = {
     username,
     email,
     password,
   };
 
-  return postUser(username, email, password)
+  return createUser(username, email, password)
+    .then(
+      () => dispatch(setUser(user)),
+      error => alert(error),
+    );
+};
+
+const loginUser = (username, email, password) => fetch('/login', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json; charset=utf-8',
+  },
+  body: JSON.stringify({ username, password }),
+})
+  .then((response) => {
+    if (response.status !== 201) throw new Error('Post failed');
+    return response.json();
+  });
+
+export const loginThenSetUser = (username, password) => (dispatch) => {
+  const user = {
+    username,
+    password,
+  };
+
+  return loginUser(username, password)
     .then(
       () => dispatch(setUser(user)),
       error => alert(error),
