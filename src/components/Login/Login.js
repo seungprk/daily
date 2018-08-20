@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Login extends React.Component {
   constructor(props) {
@@ -61,5 +62,9 @@ class Login extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  createUser: PropTypes.func.isRequired,
+};
 
 export default Login;
