@@ -14,6 +14,7 @@ class Login extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleSubmit(e) {
@@ -46,6 +47,11 @@ class Login extends React.Component {
     }
   }
 
+  handleClick() {
+    const { isSignUp } = this.state;
+    this.setState({ isSignUp: !isSignUp });
+  }
+
   render() {
     const {
       username,
@@ -71,7 +77,7 @@ class Login extends React.Component {
             Password
             <input id="password" type="password" value={password} onChange={this.handleChange} />
           </label>
-          <button type="button">
+          <button type="submit">
             Submit
           </button>
         </form>
@@ -85,6 +91,7 @@ class Login extends React.Component {
 
 Login.propTypes = {
   createUser: PropTypes.func.isRequired,
+  loginUser: PropTypes.func.isRequired,
 };
 
 export default Login;
