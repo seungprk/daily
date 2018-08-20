@@ -5,8 +5,11 @@ exports.getIfValid = (username, password) => pool.query('SELECT * FROM users WHE
   .then((res) => {
     const userData = res.rows[0];
     if (userData) {
-      const passIsValid = bcrypt.compare(userData.password, password);
-      if (passIsValid) return userData;
+      return bcrypt.compare(password, userData.password)
+        .then((passIsValid) => {
+          if (passIsValid) return userData;
+          return null;
+        });
     }
     return null;
   });
@@ -14,9 +17,10 @@ exports.getIfValid = (username, password) => pool.query('SELECT * FROM users WHE
 exports.create = (username, email, password) => {
   const saltRounds = 10;
   return bcrypt.hash(password, saltRounds)
-    .then(hash => pool.query('INSERT INTO users (username, email, password) VALUES ($1, $2, $3)', [
+    .then(hash => pool.query('INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING id', [
       username,
       email,
       hash,
-    ]));
+    ]))
+    .then(res => res.rows[0].id);
 };

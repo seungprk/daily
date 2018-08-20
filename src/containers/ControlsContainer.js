@@ -18,8 +18,8 @@ const mergeProps = (stateProps, dispatchProps) => {
   });
 
   return {
-    addTask: text => dispatch(postThenAddTask(text, user)),
-    copyYesterday: () => dispatch(postThenCopyTasks(yesterdayTasks, user)),
+    addTask: text => dispatch(postThenAddTask(text, user.id)),
+    copyYesterday: () => dispatch(postThenCopyTasks(yesterdayTasks, user.id)),
   };
 };
 

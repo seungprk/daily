@@ -28,7 +28,7 @@ app.post('/login', (req, res) => {
     .then((user) => {
       if (user) {
         req.session.user = user;
-        res.sendStatus(201);
+        res.status(200).send(JSON.stringify(user.id));
       } else {
         res.sendStatus(401);
       }
@@ -42,7 +42,7 @@ app.post('/users', (req, res) => {
       console.error(error);
       res.sendStatus(400);
     })
-    .then(() => res.sendStatus(201));
+    .then(userId => res.status(201).send(JSON.stringify(userId)));
 });
 
 app.get('/users/:userId/tasks', (req, res) => {

@@ -20,9 +20,9 @@ const mergeProps = (stateProps, dispatchProps) => {
 
   return {
     tasks,
-    loadTasks: () => dispatch(getThenLoadTasks(user)),
-    toggleTask: taskId => dispatch(patchThenToggleTask(taskId, user)),
-    deleteTask: taskId => dispatch(reqThenDeleteTask(taskId, user)),
+    loadTasks: () => dispatch(getThenLoadTasks(user.id)),
+    toggleTask: taskId => dispatch(patchThenToggleTask(taskId, user.id)),
+    deleteTask: taskId => dispatch(reqThenDeleteTask(taskId, user.id)),
   };
 };
 

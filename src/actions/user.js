@@ -34,7 +34,7 @@ export const createThenSetUser = (username, email, password) => (dispatch) => {
     );
 };
 
-const loginUser = (username, email, password) => fetch('/login', {
+const loginUser = (username, password) => fetch('/login', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json; charset=utf-8',
@@ -42,19 +42,23 @@ const loginUser = (username, email, password) => fetch('/login', {
   body: JSON.stringify({ username, password }),
 })
   .then((response) => {
-    if (response.status !== 201) throw new Error('Post failed');
+    if (response.status !== 200) throw new Error('Login failed');
     return response.json();
   });
 
 export const loginThenSetUser = (username, password) => (dispatch) => {
-  const user = {
-    username,
-    password,
+  const handleSuccess = (userId) => {
+    const user = {
+      id: userId,
+      username,
+      password,
+    };
+    dispatch(setUser(user));
   };
 
   return loginUser(username, password)
     .then(
-      () => dispatch(setUser(user)),
+      handleSuccess,
       error => alert(error),
     );
 };
