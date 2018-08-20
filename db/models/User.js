@@ -26,8 +26,11 @@ exports.create = (username, email, password) => {
       hash,
     ]))
     .then((res) => {
-      const user = res.rows[0];
-      delete user.password;
-      return user;
+      const userId = res.rows[0].id;
+      return {
+        id: userId,
+        username,
+        email,
+      };
     });
 };

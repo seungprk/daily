@@ -22,9 +22,14 @@ const setUser = (user) => {
 };
 
 export const createThenSetUser = (username, email, password) => (dispatch) => {
-  createUser(username, email, password)
+  const handleSuccess = (user) => {
+    dispatch(setUser(user));
+    dispatch(getThenLoadTasks(user.id));
+  };
+
+  return createUser(username, email, password)
     .then(
-      user => dispatch(setUser(user)),
+      handleSuccess,
       error => alert(error),
     );
 };
