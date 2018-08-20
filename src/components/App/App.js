@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import logo from './logo.svg';
 import './App.css';
 import TaskListContainer from '../../containers/TaskListContainer';
 import ControlsContainer from '../../containers/ControlsContainer';
 import LoginContainer from '../../containers/LoginContainer';
 
-const App = () => {
+const App = ({ user }) => {
   const today = new Date(Date.now());
   return (
     <div className="App">
@@ -16,10 +17,26 @@ const App = () => {
         </h1>
       </header>
       <LoginContainer />
-      <ControlsContainer />
-      <TaskListContainer targetDate={today} />
+      {user ? (
+        <div>
+          <ControlsContainer />
+          <TaskListContainer targetDate={today} />
+        </div>
+      ) : null}
     </div>
   );
+};
+
+App.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    username: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+  }),
+};
+
+App.defaultProps = {
+  user: null,
 };
 
 export default App;

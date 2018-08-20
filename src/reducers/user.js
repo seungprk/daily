@@ -1,4 +1,4 @@
-const users = (state = { id: null }, action) => {
+const users = (state = null, action) => {
   switch (action.type) {
     case 'SET_USER':
       return action.user;
