@@ -1,7 +1,4 @@
-const { Pool } = require('pg');
-
-const pool = new Pool();
-pool.connect();
+const pool = require('../connection.js');
 
 exports.getTasks = userId => pool.query('SELECT * FROM tasks WHERE users_id = $1 ORDER BY id', [userId])
   .then(res => res.rows.map(task => ({
@@ -30,6 +27,8 @@ exports.addTasks = (tasks, userId) => {
     .then(res => res.rows.map(row => row.id));
 };
 
-exports.toggleTask = taskId => pool.query('UPDATE tasks SET completed = NOT completed WHERE id = $1', [taskId]);
+exports.toggleTask = (taskId, userId) => pool.query('UPDATE tasks SET completed = NOT completed WHERE id = $1 AND users_id = $2', [taskId, userId])
+  .then(res => res.rowCount > 0);
 
-exports.deleteTask = taskId => pool.query('DELETE FROM tasks WHERE id = $1', [taskId]);
+exports.deleteTask = (taskId, userId) => pool.query('DELETE FROM tasks WHERE id = $1 AND users_id = $2', [taskId, userId])
+  .then(res => res.rowCount > 0);
