@@ -22,15 +22,9 @@ const setUser = (user) => {
 };
 
 export const createThenSetUser = (username, email, password) => (dispatch) => {
-  const user = {
-    username,
-    email,
-    password,
-  };
-
-  return createUser(username, email, password)
+  createUser(username, email, password)
     .then(
-      () => dispatch(setUser(user)),
+      user => dispatch(setUser(user)),
       error => alert(error),
     );
 };
@@ -48,14 +42,9 @@ const loginUser = (username, password) => fetch('/login', {
   });
 
 export const loginThenSetUser = (username, password) => (dispatch) => {
-  const handleSuccess = (userId) => {
-    const user = {
-      id: userId,
-      username,
-      password,
-    };
+  const handleSuccess = (user) => {
     dispatch(setUser(user));
-    dispatch(getThenLoadTasks(userId));
+    dispatch(getThenLoadTasks(user.id));
   };
 
   return loginUser(username, password)

@@ -7,7 +7,10 @@ exports.getIfValid = (username, password) => pool.query('SELECT * FROM users WHE
     if (userData) {
       return bcrypt.compare(password, userData.password)
         .then((passIsValid) => {
-          if (passIsValid) return userData;
+          if (passIsValid) {
+            delete userData.password;
+            return userData;
+          }
           return null;
         });
     }
@@ -22,5 +25,9 @@ exports.create = (username, email, password) => {
       email,
       hash,
     ]))
-    .then(res => res.rows[0].id);
+    .then((res) => {
+      const user = res.rows[0];
+      delete user.password;
+      return user;
+    });
 };
