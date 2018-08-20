@@ -53,3 +53,11 @@ export const loginThenSetUser = (username, password) => (dispatch) => {
       error => alert(error),
     );
 };
+
+export const logOut = () => {
+  const action = {
+    type: 'SET_USER',
+    user: null,
+  };
+  return action;
+};

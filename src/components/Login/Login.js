@@ -14,7 +14,8 @@ class Login extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleSwitch = this.handleSwitch.bind(this);
+    this.handleLogOut = this.handleLogOut.bind(this);
   }
 
   handleSubmit(e) {
@@ -47,9 +48,14 @@ class Login extends React.Component {
     }
   }
 
-  handleClick() {
+  handleSwitch() {
     const { isSignUp } = this.state;
     this.setState({ isSignUp: !isSignUp });
+  }
+
+  handleLogOut() {
+    const { logOut } = this.props;
+    logOut();
   }
 
   render() {
@@ -106,6 +112,7 @@ Login.propTypes = {
   }),
   createUser: PropTypes.func.isRequired,
   loginUser: PropTypes.func.isRequired,
+  logOut: PropTypes.func.isRequired,
 };
 
 Login.defaultProps = {
