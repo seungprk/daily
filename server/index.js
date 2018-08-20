@@ -45,6 +45,16 @@ app.post('/users', (req, res) => {
     .then(user => res.status(201).send(JSON.stringify(user)));
 });
 
+app.use('/users/:userId', (req, res, next) => {
+  const userId = parseInt(req.params.userId, 10);
+
+  if (req.session.user.id === userId) {
+    next();
+  } else {
+    res.sendStatus(403);
+  }
+});
+
 app.get('/users/:userId/tasks', (req, res) => {
   Task.getTasks(req.params.userId)
     .then(tasks => res.send(JSON.stringify(tasks)));
@@ -56,13 +66,23 @@ app.post('/users/:userId/tasks', (req, res) => {
 });
 
 app.patch('/users/:userId/tasks/:taskId', (req, res) => {
-  Task.toggleTask(req.params.taskId)
-    .then(() => res.sendStatus(204));
+  const { taskId, userId } = req.params;
+
+  Task.toggleTask(taskId, userId)
+    .then((allowed) => {
+      if (allowed) res.sendStatus(204);
+      else res.sendStatus(401);
+    });
 });
 
 app.delete('/users/:userId/tasks/:taskId', (req, res) => {
-  Task.deleteTask(req.params.taskId)
-    .then(() => res.sendStatus(200));
+  const { taskId, userId } = req.params;
+
+  Task.deleteTask(taskId, userId)
+    .then((allowed) => {
+      if (allowed) res.sendStatus(200);
+      else res.sendStatus(401);
+    });
 });
 
 app.listen(PORT, () => {
