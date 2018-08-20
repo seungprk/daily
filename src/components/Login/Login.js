@@ -53,12 +53,21 @@ class Login extends React.Component {
   }
 
   render() {
+    const { user } = this.props;
     const {
       username,
       email,
       password,
       isSignUp,
     } = this.state;
+
+    if (user) {
+      return (
+        <button type="button" onClick={this.handleLogOut}>
+          Log Out
+        </button>
+      );
+    }
 
     return (
       <div>
@@ -81,7 +90,7 @@ class Login extends React.Component {
             Submit
           </button>
         </form>
-        <button type="button" onClick={this.handleClick}>
+        <button type="button" onClick={this.handleSwitch}>
           {isSignUp ? 'Log In' : 'Sign Up'}
         </button>
       </div>
@@ -90,8 +99,17 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    username: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+  }),
   createUser: PropTypes.func.isRequired,
   loginUser: PropTypes.func.isRequired,
+};
+
+Login.defaultProps = {
+  user: null,
 };
 
 export default Login;
