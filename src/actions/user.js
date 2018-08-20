@@ -1,4 +1,5 @@
 /* eslint no-alert: 0 */
+import { getThenLoadTasks } from './tasks';
 
 const createUser = (username, email, password) => fetch('/users', {
   method: 'POST',
@@ -54,6 +55,7 @@ export const loginThenSetUser = (username, password) => (dispatch) => {
       password,
     };
     dispatch(setUser(user));
+    dispatch(getThenLoadTasks(userId));
   };
 
   return loginUser(username, password)

@@ -4,8 +4,8 @@ import TaskListItem from '../TaskListItem/TaskListItem';
 
 class TaskList extends React.Component {
   componentDidMount() {
-    const { loadTasks } = this.props;
-    loadTasks();
+    const { user, loadTasks } = this.props;
+    if (user) loadTasks();
   }
 
   render() {
@@ -26,6 +26,10 @@ class TaskList extends React.Component {
 }
 
 TaskList.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    username: PropTypes.string.isRequired,
+  }).isRequired,
   tasks: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     text: PropTypes.string.isRequired,
