@@ -59,17 +59,16 @@ export const loginThenSetUser = (username, password) => (dispatch) => {
     );
 };
 
-export const logOut = () => {
-  const action = {
-    type: 'SET_USER',
-    user: null,
-  };
-  return action;
-};
+export const logOut = () => dispatch => fetch('/login', {
+  method: 'DELETE',
+})
+  .then((res) => {
+    if (res.status === 200) dispatch(setUser(null));
+  });
 
 export const checkLogin = () => dispatch => fetch('/login')
   .then(res => res.json())
-  .then((user) => {
+  .then(({ user }) => {
     if (user) {
       dispatch(setUser(user));
       dispatch(getThenLoadTasks(user.id));

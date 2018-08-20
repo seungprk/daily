@@ -24,8 +24,7 @@ app.get('/', (req, res) => {
 
 app.get('/login', (req, res) => {
   const { user } = req.session;
-  if (user) res.status(200).send(JSON.stringify(user));
-  else res.sendStatus(400);
+  res.status(200).send({ user });
 });
 
 app.post('/login', (req, res) => {
@@ -39,6 +38,11 @@ app.post('/login', (req, res) => {
         res.sendStatus(401);
       }
     });
+});
+
+app.delete('/login', (req, res) => {
+  req.session = null;
+  res.sendStatus(200);
 });
 
 app.post('/users', (req, res) => {

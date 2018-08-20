@@ -1,4 +1,4 @@
-const users = (state = null, action) => {
+const user = (state = null, action) => {
   switch (action.type) {
     case 'SET_USER':
       return action.user;
@@ -7,4 +7,4 @@ const users = (state = null, action) => {
   }
 };
 
-export default users;
+export default user;
