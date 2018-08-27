@@ -2,13 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TaskListItem from '../TaskListItem/TaskListItem';
 
-const TaskList = ({ tasks, toggleTask, deleteTask }) => {
+const TaskList = ({ tasks, ...dispatchFns }) => {
   const createTaskListItem = task => (
     <TaskListItem
       key={task.id}
       task={task}
-      toggleTask={toggleTask}
-      deleteTask={deleteTask}
+      {...dispatchFns}
     />
   );
 

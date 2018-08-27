@@ -12,7 +12,10 @@ const loadTasks = (tasks) => {
 };
 
 export const getThenLoadTasks = userId => dispatch => getTasks(userId)
-  .then(tasks => dispatch(loadTasks(tasks)));
+  .then((tasks) => {
+    const isEditAddedTasks = tasks.map(task => ({ ...task, isEdit: false }));
+    dispatch(loadTasks(isEditAddedTasks));
+  });
 
 const postTasks = (tasks, userId) => fetch(`/users/${userId}/tasks`, {
   method: 'POST',
@@ -61,6 +64,7 @@ export const postThenAddTask = (text, type, userId) => (dispatch) => {
     type,
     date: `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`,
     completed: false,
+    isEdit: true,
   };
 
   const handleSuccess = (taskIds) => {
@@ -116,3 +120,11 @@ export const reqThenDeleteTask = (taskId, userId) => dispatch => deleteRequest(t
     () => dispatch(deleteTask(taskId)),
     error => alert(error),
   );
+
+export const toggleEdit = (id) => {
+  const action = {
+    type: 'TOGGLE_EDIT',
+    id,
+  };
+  return action;
+};
