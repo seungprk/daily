@@ -11,13 +11,13 @@ exports.getTasks = userId => pool.query('SELECT * FROM tasks WHERE users_id = $1
 exports.addTasks = (tasks, userId) => {
   let counter = 1;
   const queryValues = [];
-  let queryStr = 'INSERT INTO tasks (users_id, text, date) VALUES';
+  let queryStr = 'INSERT INTO tasks (users_id, text, date, type) VALUES';
 
   tasks.forEach((task) => {
-    queryStr += ` ($${counter}, $${counter + 1}, $${counter + 2}),`;
-    const taskItems = [userId, task.text, task.date];
+    queryStr += ` ($${counter}, $${counter + 1}, $${counter + 2}, $${counter + 3}),`;
+    const taskItems = [userId, task.text, task.date, task.type];
     queryValues.push(...taskItems);
-    counter += 3;
+    counter += 4;
   });
 
   queryStr = queryStr.slice(0, -1);

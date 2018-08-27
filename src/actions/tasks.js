@@ -54,10 +54,11 @@ export const postThenCopyTasks = (tasks, userId) => (dispatch) => {
     );
 };
 
-export const postThenAddTask = (text, userId) => (dispatch) => {
+export const postThenAddTask = (text, type, userId) => (dispatch) => {
   const now = new Date(Date.now());
   const task = {
     text,
+    type,
     date: `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`,
     completed: false,
   };

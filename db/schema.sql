@@ -10,5 +10,20 @@ CREATE TABLE tasks (
   users_id INTEGER NOT NULL,
   text VARCHAR(200) NOT NULL,
   completed BOOLEAN DEFAULT FALSE,
+  type TEXT NOT NULL,
   date DATE NOT NULL
+);
+
+CREATE TABLE counters (
+  id SERIAL PRIMARY KEY,
+  tasks_id INTEGER NOT NULL,
+  completed INTEGER NOT NULL,
+  total INTEGER NOT NULL
+);
+
+CREATE TABLE list_items (
+  id SERIAL PRIMARY KEY,
+  tasks_id INTEGER NOT NULL,
+  text VARCHAR(200) NOT NULL,
+  completed BOOLEAN DEFAULT FALSE
 );
