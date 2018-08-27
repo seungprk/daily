@@ -11,6 +11,8 @@ class ItemEdit extends React.Component {
   }
 
   handleChange(e) {
+    const { task, changeType } = this.props;
+    changeType(e.target.value, task);
     this.setState({ selection: e.target.value });
   }
 
@@ -28,13 +30,13 @@ class ItemEdit extends React.Component {
           {`TYPE: ${task.type}`}
         </span>
         <select value={selection} onChange={this.handleChange}>
-          <option>
+          <option value="check">
             Check
           </option>
-          <option>
+          <option value="counter">
             Counter
           </option>
-          <option>
+          <option value="list">
             List
           </option>
         </select>
@@ -54,6 +56,7 @@ ItemEdit.propTypes = {
     type: PropTypes.string.isRequired,
   }).isRequired,
   toggleEdit: PropTypes.func.isRequired,
+  changeType: PropTypes.func.isRequired,
 };
 
 export default ItemEdit;
