@@ -79,24 +79,28 @@ export const postThenAddTask = (text, type, userId) => (dispatch) => {
     );
 };
 
-const patchToggle = (taskId, userId) => fetch(`/users/${userId}/tasks/${taskId}`, {
+const updateTask = (task) => {
+  const action = {
+    type: 'UPDATE_TASK',
+    task,
+  };
+  return action;
+};
+
+const patchTask = (task, userId) => fetch(`/users/${userId}/tasks/${task.id}`, {
   method: 'PATCH',
+  headers: {
+    'Content-Type': 'application/json; charset=utf-8',
+  },
+  body: JSON.stringify(task),
 })
   .then((response) => {
     if (response.status !== 204) throw new Error('Patch failed');
   });
 
-const toggleTask = (id) => {
-  const action = {
-    type: 'TOGGLE_TASK',
-    id,
-  };
-  return action;
-};
-
-export const patchThenToggleTask = (taskId, userId) => dispatch => patchToggle(taskId, userId)
+export const patchThenUpdateTask = (task, userId) => dispatch => patchTask(task, userId)
   .then(
-    () => dispatch(toggleTask(taskId)),
+    () => dispatch(updateTask(task)),
     error => alert(error),
   );
 

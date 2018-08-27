@@ -16,7 +16,7 @@ const Display = (props) => {
       <span className={textClass}>
         {task.text}
       </span>
-      <button type="button" onClick={() => toggleTask(task.id)}>
+      <button type="button" onClick={() => toggleTask(task)}>
         Done
       </button>
       <button type="button" onClick={() => toggleEdit(task.id)}>
@@ -40,6 +40,9 @@ const Edit = (props) => {
     <div>
       <span className={textClass}>
         {`EDITING: ${task.text}`}
+      </span>
+      <span className={textClass}>
+        {`TYPE: ${task.type}`}
       </span>
       <button type="button" onClick={() => toggleEdit(task.id)}>
         Done

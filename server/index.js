@@ -76,9 +76,9 @@ app.post('/users/:userId/tasks', (req, res) => {
 });
 
 app.patch('/users/:userId/tasks/:taskId', (req, res) => {
-  const { taskId, userId } = req.params;
+  const { userId } = req.params;
 
-  Task.toggleTask(taskId, userId)
+  Task.updateTask(req.body, userId)
     .then((allowed) => {
       if (allowed) res.sendStatus(204);
       else res.sendStatus(401);

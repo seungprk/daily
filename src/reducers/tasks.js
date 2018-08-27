@@ -7,14 +7,14 @@ const tasks = (state = [], action) => {
         ...state,
         ...action.tasks,
       ];
-    case 'TOGGLE_TASK':
-      return state.map((task) => {
-        if (task.id === action.id) return { ...task, completed: !task.completed };
-        return task;
-      });
     case 'TOGGLE_EDIT':
       return state.map((task) => {
         if (task.id === action.id) return { ...task, isEdit: !task.isEdit };
+        return task;
+      });
+    case 'UPDATE_TASK':
+      return state.map((task) => {
+        if (task.id === action.task.id) return { ...action.task };
         return task;
       });
     case 'DELETE_TASK':
