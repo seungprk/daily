@@ -5,7 +5,7 @@ import './TaskListItem.css';
 class ItemEdit extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { selection: props.task.type };
+    this.state = { selection: props.task.type.name };
 
     this.handleChange = this.handleChange.bind(this);
   }
