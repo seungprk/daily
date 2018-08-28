@@ -2,26 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './TaskListItem.css';
 
-const getWidget = (type) => {
-  if (type === 'counter') {
-    return (
-      <span>
-        3 / 5
-      </span>
-    );
-  }
-  if (type === 'list') {
-    return (
-      <div>
-        <div>Do Thing A</div>
-        <div>Do Thing B</div>
-        <div>Do Thing C</div>
-      </div>
-    );
-  }
-  return null;
-};
-
 const ItemDisplay = (props) => {
   const {
     task,
@@ -45,7 +25,6 @@ const ItemDisplay = (props) => {
       <button type="button" onClick={() => deleteTask(task.id)}>
         Delete
       </button>
-      {getWidget(task.type)}
     </div>
   );
 };

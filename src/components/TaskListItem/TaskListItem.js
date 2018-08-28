@@ -2,12 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ItemEdit from './ItemEdit';
 import ItemDisplay from './ItemDisplay';
+import ItemRepeat from './ItemRepeat';
+import ItemList from './ItemList';
 import './TaskListItem.css';
 
 const TaskListItem = (props) => {
   const { task } = props;
-  if (task.isEdit) return <ItemEdit {...props} />;
-  return <ItemDisplay {...props} />;
+  return (
+    <div>
+      {task.isEdit ? <ItemEdit {...props} /> : <ItemDisplay {...props} />}
+      {task.type === 'repeat' ? <ItemRepeat {...props} /> : null}
+      {task.type === 'list' ? <ItemList {...props} /> : null}
+    </div>
+  );
 };
 
 TaskListItem.propTypes = {

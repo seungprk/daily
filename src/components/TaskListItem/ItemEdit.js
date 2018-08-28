@@ -30,8 +30,8 @@ class ItemEdit extends React.Component {
           <option value="check">
             Check
           </option>
-          <option value="counter">
-            Counter
+          <option value="repeat">
+            Repeat
           </option>
           <option value="list">
             List
