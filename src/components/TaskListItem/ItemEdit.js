@@ -26,9 +26,6 @@ class ItemEdit extends React.Component {
         <span className={textClass}>
           {`EDITING: ${task.text}`}
         </span>
-        <span className={textClass}>
-          {`TYPE: ${task.type}`}
-        </span>
         <select value={selection} onChange={this.handleChange}>
           <option value="check">
             Check
