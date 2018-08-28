@@ -34,7 +34,9 @@ ItemDisplay.propTypes = {
     id: PropTypes.number.isRequired,
     text: PropTypes.string.isRequired,
     completed: PropTypes.bool.isRequired,
-    type: PropTypes.string.isRequired,
+    type: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
   }).isRequired,
   toggleTask: PropTypes.func.isRequired,
   toggleEdit: PropTypes.func.isRequired,

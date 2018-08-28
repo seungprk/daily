@@ -11,8 +11,8 @@ const TaskListItem = (props) => {
   return (
     <div>
       {task.isEdit ? <ItemEdit {...props} /> : <ItemDisplay {...props} />}
-      {task.type === 'repeat' ? <ItemRepeat {...props} /> : null}
-      {task.type === 'list' ? <ItemList {...props} /> : null}
+      {task.type.name === 'repeat' ? <ItemRepeat {...props} /> : null}
+      {task.type.name === 'list' ? <ItemList {...props} /> : null}
     </div>
   );
 };
@@ -22,7 +22,9 @@ TaskListItem.propTypes = {
     id: PropTypes.number.isRequired,
     text: PropTypes.string.isRequired,
     completed: PropTypes.bool.isRequired,
-    type: PropTypes.string.isRequired,
+    type: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
   }).isRequired,
   toggleTask: PropTypes.func.isRequired,
   toggleEdit: PropTypes.func.isRequired,

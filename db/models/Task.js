@@ -1,7 +1,11 @@
 const pool = require('../connection.js');
 
 exports.getTasks = userId => pool.query('SELECT * FROM tasks WHERE users_id = $1 ORDER BY id', [userId])
-  .then(res => res.rows.map(task => ({ ...task, date: Date.parse(task.date) })));
+  .then(res => res.rows.map(task => ({
+    ...task,
+    date: Date.parse(task.date),
+    type: { name: task.type },
+  })));
 
 exports.addTasks = (tasks, userId) => {
   let counter = 1;
@@ -25,7 +29,7 @@ exports.addTasks = (tasks, userId) => {
 exports.updateTask = (task, userId) => pool.query('UPDATE tasks SET text = $1, completed = $2, type = $3 WHERE id = $4 AND users_id = $5', [
   task.text,
   task.completed,
-  task.type,
+  task.type.name,
   task.id,
   userId,
 ])

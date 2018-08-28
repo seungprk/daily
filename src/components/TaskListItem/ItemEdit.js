@@ -12,7 +12,9 @@ class ItemEdit extends React.Component {
 
   handleChange(e) {
     const { task, changeType } = this.props;
-    changeType(e.target.value, task);
+    changeType({
+      name: e.target.value,
+    }, task);
     this.setState({ selection: e.target.value });
   }
 
@@ -50,7 +52,9 @@ ItemEdit.propTypes = {
     id: PropTypes.number.isRequired,
     text: PropTypes.string.isRequired,
     completed: PropTypes.bool.isRequired,
-    type: PropTypes.string.isRequired,
+    type: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
   }).isRequired,
   toggleEdit: PropTypes.func.isRequired,
   changeType: PropTypes.func.isRequired,
