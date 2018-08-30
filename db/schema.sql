@@ -18,7 +18,7 @@ CREATE TABLE counters (
   id SERIAL PRIMARY KEY,
   tasks_id INTEGER NOT NULL,
   completed INTEGER NOT NULL,
-  total INTEGER NOT NULL
+  repeat INTEGER NOT NULL
 );
 
 CREATE TABLE list_items (
