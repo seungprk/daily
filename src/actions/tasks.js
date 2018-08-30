@@ -79,7 +79,7 @@ export const postThenAddTask = (text, type, userId) => (dispatch) => {
     );
 };
 
-const updateTask = (task) => {
+export const updateTask = (task) => {
   const action = {
     type: 'UPDATE_TASK',
     task,
@@ -132,3 +132,9 @@ export const toggleEdit = (id) => {
   };
   return action;
 };
+
+export const patchThenToggleEdit = (task, userId) => dispatch => patchTask(task, userId)
+  .then(
+    () => dispatch(toggleEdit(task.id)),
+    error => alert(error),
+  );

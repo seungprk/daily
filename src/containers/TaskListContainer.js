@@ -1,6 +1,12 @@
 import { connect } from 'react-redux';
 import TaskList from '../components/TaskList/TaskList';
-import { patchThenUpdateTask, reqThenDeleteTask, toggleEdit } from '../actions/tasks';
+import {
+  updateTask,
+  patchThenUpdateTask,
+  reqThenDeleteTask,
+  toggleEdit,
+  patchThenToggleEdit,
+} from '../actions/tasks';
 
 const mapStateToProps = (state, ownProps) => {
   const tasks = state.tasks.filter((task) => {
@@ -26,9 +32,12 @@ const mergeProps = (stateProps, dispatchProps) => {
     },
     changeType: (type, task) => {
       const changedTask = { ...task, type };
-      dispatch(patchThenUpdateTask(changedTask, user.id));
+      dispatch(updateTask(changedTask, user.id));
     },
-    toggleEdit: taskId => dispatch(toggleEdit(taskId)),
+    toggleEdit: (task) => {
+      if (task.isEdit) dispatch(patchThenToggleEdit(task, user.id));
+      else dispatch(toggleEdit(task.id));
+    },
     deleteTask: taskId => dispatch(reqThenDeleteTask(taskId, user.id)),
   };
 };

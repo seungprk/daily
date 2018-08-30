@@ -39,7 +39,7 @@ class ItemEdit extends React.Component {
             List
           </option>
         </select>
-        <button type="button" onClick={() => toggleEdit(task.id)}>
+        <button type="button" onClick={() => toggleEdit(task)}>
           Done
         </button>
       </div>

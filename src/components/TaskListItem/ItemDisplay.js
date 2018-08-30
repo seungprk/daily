@@ -19,7 +19,7 @@ const ItemDisplay = (props) => {
       <button type="button" onClick={() => toggleTask(task)}>
         Done
       </button>
-      <button type="button" onClick={() => toggleEdit(task.id)}>
+      <button type="button" onClick={() => toggleEdit(task)}>
         Edit
       </button>
       <button type="button" onClick={() => deleteTask(task.id)}>
