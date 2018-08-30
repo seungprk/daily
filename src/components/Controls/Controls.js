@@ -15,7 +15,7 @@ class Controls extends React.Component {
     const { addTask } = this.props;
     const { text } = this.state;
 
-    addTask(text, 'check');
+    addTask(text);
     this.setState({ text: '' });
   }
 

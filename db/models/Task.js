@@ -14,7 +14,7 @@ exports.addTasks = (tasks, userId) => {
 
   tasks.forEach((task) => {
     queryStr += ` ($${counter}, $${counter + 1}, $${counter + 2}, $${counter + 3}),`;
-    const taskItems = [userId, task.text, task.date, task.type];
+    const taskItems = [userId, task.text, task.date, task.type.name];
     queryValues.push(...taskItems);
     counter += 4;
   });
