@@ -6,7 +6,6 @@ class ItemEdit extends React.Component {
   constructor(props) {
     super(props);
     this.state = { selection: props.task.type.name };
-
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -39,7 +38,7 @@ class ItemEdit extends React.Component {
             List
           </option>
         </select>
-        <button type="button" onClick={() => toggleEdit(task)}>
+        <button type="button" onClick={toggleEdit}>
           Done
         </button>
       </div>

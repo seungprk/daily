@@ -1,44 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class ItemRepeat extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      completed: 0,
-      repeat: 0,
-    };
-    this.handleChange = this.handleChange.bind(this);
+const ItemRepeat = ({ task, typeData, updateTypeData }) => {
+  let completed = '';
+  let repeat = '';
+  if (typeData) {
+    completed = typeData.completed || '';
+    repeat = typeData.repeat || '';
   }
 
-  handleChange(e) {
-    this.setState({
-      [e.target.id]: e.target.value,
-    });
-  }
-
-  render() {
-    const { task } = this.props;
-    if (task.isEdit) {
-      return (
-        <span>
-          <input id="completed" type="number" onChange={this.handleChange} />
-          <input id="repeat" type="number" onChange={this.handleChange} />
-        </span>
-      );
-    }
+  if (task.isEdit) {
     return (
       <span>
-        3 / 5
+        <input id="completed" type="number" value={completed} onChange={updateTypeData} />
+        <input id="repeat" type="number" value={repeat} onChange={updateTypeData} />
       </span>
     );
   }
-}
+  return (
+    <span>
+      {completed} / {repeat}
+    </span>
+  );
+};
 
 ItemRepeat.propTypes = {
   task: PropTypes.shape({
     isEdit: PropTypes.bool.isRequired,
   }).isRequired,
+  typeData: PropTypes.shape({
+    completed: PropTypes.string.isRequired,
+    repeat: PropTypes.string.isRequired,
+  }).isRequired,
+  updateTypeData: PropTypes.func.isRequired,
 };
 
 export default ItemRepeat;

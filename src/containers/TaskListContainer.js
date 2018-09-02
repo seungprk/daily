@@ -34,9 +34,19 @@ const mergeProps = (stateProps, dispatchProps) => {
       const changedTask = { ...task, type };
       dispatch(updateTask(changedTask, user.id));
     },
-    toggleEdit: (task) => {
-      if (task.isEdit) dispatch(patchThenToggleEdit(task, user.id));
-      else dispatch(toggleEdit(task.id));
+    toggleEdit: (task, typeData) => {
+      if (!task.isEdit) dispatch(toggleEdit(task.id));
+      else {
+        const mergedTask = {
+          ...task,
+          type: {
+            name: task.type.name,
+            data: typeData,
+          },
+        };
+        console.log(mergedTask);
+        dispatch(patchThenToggleEdit(mergedTask, user.id));
+      }
     },
     deleteTask: taskId => dispatch(reqThenDeleteTask(taskId, user.id)),
   };
