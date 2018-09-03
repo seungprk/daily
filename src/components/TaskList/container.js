@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
-import TaskList from '../components/TaskList/TaskList';
+import TaskList from '.';
 import {
   updateTask,
   patchThenUpdateTask,
   reqThenDeleteTask,
   toggleEdit,
   patchThenToggleEdit,
-} from '../actions/tasks';
+} from '../../actions/tasks';
 
 const mapStateToProps = (state, ownProps) => {
   const tasks = state.tasks.filter((task) => {

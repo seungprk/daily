@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import logo from './logo.svg';
-import './App.css';
-import TaskListContainer from '../../containers/TaskListContainer';
-import ControlsContainer from '../../containers/ControlsContainer';
-import LoginContainer from '../../containers/LoginContainer';
+import './style.css';
+import TaskListContainer from '../TaskList/container';
+import ControlsContainer from '../Controls/container';
+import LoginContainer from '../Login/container';
 
 class App extends React.Component {
   componentDidMount() {

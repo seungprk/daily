@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ItemEdit from './ItemEdit';
-import ItemDisplay from './ItemDisplay';
-import ItemRepeat from './ItemRepeat';
-import ItemList from './ItemList';
-import './TaskListItem.css';
+import ItemEdit from '../ItemEdit';
+import ItemDisplay from '../ItemDisplay';
+import ItemRepeat from '../ItemRepeat';
+import ItemList from '../ItemList';
 
 const TaskListItem = ({ task }) => (
   <div>

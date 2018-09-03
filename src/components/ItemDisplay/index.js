@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './TaskListItem.css';
+import './style.css';
 
 const ItemDisplay = (props) => {
   const {

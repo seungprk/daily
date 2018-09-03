@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TaskListItem from '../TaskListItem/TaskListItem';
+import TaskListItem from '../TaskListItem';
 
 const TaskList = ({ tasks, ...dispatchFns }) => {
   const createTaskListItem = task => (

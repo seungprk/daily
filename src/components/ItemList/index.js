@@ -1,5 +1,5 @@
 import React from 'react';
-import SubListItem from './SubListItem';
+import SubListItem from '../SubListItem';
 
 class ItemList extends React.Component {
   constructor(props) {
