@@ -5,21 +5,17 @@ import './style.css';
 class ItemEdit extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { selection: props.task.type.name };
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(e) {
-    const { task, changeType } = this.props;
-    changeType({
-      name: e.target.value,
-    }, task);
-    this.setState({ selection: e.target.value });
+    const { changeType } = this.props;
+    const name = e.target.value;
+    changeType({ name });
   }
 
   render() {
     const { task, toggleEdit } = this.props;
-    const { selection } = this.state;
 
     const textClass = task.completed ? 'task-list-item--done' : '';
     return (
@@ -27,7 +23,7 @@ class ItemEdit extends React.Component {
         <span className={textClass}>
           {`EDITING: ${task.text}`}
         </span>
-        <select value={selection} onChange={this.handleChange}>
+        <select value={task.type.name} onChange={this.handleChange}>
           <option value="check">
             Check
           </option>

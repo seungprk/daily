@@ -16,13 +16,13 @@ const ItemDisplay = (props) => {
       <span className={textClass}>
         {task.text}
       </span>
-      <button type="button" onClick={() => toggleTask(task)}>
+      <button type="button" onClick={toggleTask}>
         Done
       </button>
-      <button type="button" onClick={() => toggleEdit(task)}>
+      <button type="button" onClick={toggleEdit}>
         Edit
       </button>
-      <button type="button" onClick={() => deleteTask(task.id)}>
+      <button type="button" onClick={deleteTask}>
         Delete
       </button>
     </div>

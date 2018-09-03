@@ -4,24 +4,24 @@ import SubListItem from '../SubListItem';
 class ItemList extends React.Component {
   constructor(props) {
     super(props);
-    const { typeData } = props;
-    this.state = {
-      subListItems: [
-        { text: 'Sub item todo 1', completed: false },
-        { text: 'Sub item todo 2', completed: true },
-        { text: 'Sub item todo 3', completed: false },
-      ],
-    };
+    this.state = { value: '' };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(e) {
+    this.setState({ value: e.target.value });
   }
 
   render() {
-    const { task, typeData, updateTypeData } = this.props;
-    const { subListItems } = this.state;
+    const { task, addItem } = this.props;
+    const { value } = this.state;
+    const { data } = task.type;
     return (
       <div>
-        {subListItems.map(item => <SubListItem {...item} isEdit={task.isEdit} />)}
+        {data ? data.map(item => <SubListItem {...item} isEdit={task.isEdit} />) : null}
         <div>
-          <button type="button">
+          <input type="text" value={value} onChange={this.handleChange} />
+          <button type="button" onClick={() => addItem(value)}>
             Add New Item
           </button>
         </div>

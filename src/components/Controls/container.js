@@ -1,23 +1,32 @@
 import { connect } from 'react-redux';
-import Login from '.';
-import { createThenSetUser, loginThenSetUser, logOut } from '../../actions/user';
+import Controls from '.';
+import { postThenAddTask, postThenCopyTasks } from '../../actions/tasks';
 
 const mapStateToProps = state => ({
   user: state.user,
   tasks: state.tasks,
 });
 
-const mapDispatchToProps = dispatch => ({
-  createUser: (
-    username,
-    email,
-    password,
-  ) => dispatch(createThenSetUser(username, email, password)),
-  loginUser: (username, password) => dispatch(loginThenSetUser(username, password)),
-  logOut: () => dispatch(logOut()),
-});
+const mergeProps = (stateProps, dispatchProps) => {
+  const { user, tasks } = stateProps;
+  const { dispatch } = dispatchProps;
+
+  const yesterdayStr = new Date(Date.now() - (24 * 60 * 60 * 1000)).toDateString();
+  const yesterdayTasks = tasks.filter((task) => {
+    const dateStr = new Date(task.date).toDateString();
+    return dateStr === yesterdayStr;
+  });
+
+  return {
+    addTask: text => dispatch(postThenAddTask(text, { name: 'check', data: null }, user.id)),
+    copyYesterday: () => {
+      if (yesterdayTasks.length > 0) dispatch(postThenCopyTasks(yesterdayTasks, user.id));
+    },
+  };
+};
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
-)(Login);
+  null,
+  mergeProps,
+)(Controls);
