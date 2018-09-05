@@ -2,7 +2,7 @@ const pool = require('../connection.js');
 
 exports.getTasks = userId => Promise.all([
   pool.query('SELECT * FROM tasks WHERE users_id = $1 ORDER BY id', [userId]),
-  pool.query('SELECT * FROM tasks INNER JOIN repeats ON tasks.id = repeats.tasks_id WHERE users_id = $1', [userId]),
+  pool.query('SELECT * FROM tasks INNER JOIN repeats ON tasks.id = repeats.tasks_id WHERE tasks.users_id = $1', [userId]),
 ])
   .then((res) => {
     const [tasks, repeats] = res;

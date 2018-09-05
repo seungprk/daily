@@ -16,6 +16,7 @@ CREATE TABLE tasks (
 
 CREATE TABLE repeats (
   tasks_id INTEGER PRIMARY KEY,
+  users_id INTEGER NOT NULL,
   completed INTEGER NOT NULL,
   repeat INTEGER NOT NULL
 );
