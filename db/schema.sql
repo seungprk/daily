@@ -14,14 +14,14 @@ CREATE TABLE tasks (
   date DATE NOT NULL
 );
 
-CREATE TABLE counters (
+CREATE TABLE repeats (
   id SERIAL PRIMARY KEY,
   tasks_id INTEGER NOT NULL,
   completed INTEGER NOT NULL,
   repeat INTEGER NOT NULL
 );
 
-CREATE TABLE list_items (
+CREATE TABLE sub_list_items (
   id SERIAL PRIMARY KEY,
   tasks_id INTEGER NOT NULL,
   text VARCHAR(200) NOT NULL,
