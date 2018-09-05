@@ -21,7 +21,7 @@ const mergeProps = (stateProps, dispatchProps) => {
     changeType: (type) => {
       let data;
       if (type.name === 'repeat') {
-        data = { completed: '0', repeat: '2' };
+        data = { completed: 0, repeat: 2 };
         dispatch(putThenUpdateRepeat(task.id, 0, 2, user.id));
       } else if (type.name === 'list') {
         data = [];

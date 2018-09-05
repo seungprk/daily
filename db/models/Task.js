@@ -1,11 +1,29 @@
 const pool = require('../connection.js');
 
-exports.getTasks = userId => pool.query('SELECT * FROM tasks WHERE users_id = $1 ORDER BY id', [userId])
-  .then(res => res.rows.map(task => ({
-    ...task,
-    date: Date.parse(task.date),
-    type: { name: task.type },
-  })));
+exports.getTasks = userId => Promise.all([
+  pool.query('SELECT * FROM tasks WHERE users_id = $1 ORDER BY id', [userId]),
+  pool.query('SELECT * FROM tasks INNER JOIN repeats ON tasks.id = repeats.tasks_id WHERE users_id = $1', [userId]),
+])
+  .then((res) => {
+    const [tasks, repeats] = res;
+
+    const repeatsMap = {};
+    repeats.rows.forEach((repeat) => {
+      repeatsMap[repeat.tasks_id] = repeat;
+    });
+
+    return tasks.rows.map((task) => {
+      const data = repeatsMap[task.id];
+      return {
+        ...task,
+        date: Date.parse(task.date),
+        type: {
+          name: task.type,
+          data,
+        },
+      };
+    });
+  });
 
 exports.addTasks = (tasks, userId) => {
   let counter = 1;

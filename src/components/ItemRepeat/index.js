@@ -5,8 +5,8 @@ const ItemRepeat = ({ task, updateInput, saveRepeat }) => {
   let completed = '';
   let repeat = '';
   if (task.type.data) {
-    completed = task.type.data.completed || '';
-    repeat = task.type.data.repeat || '';
+    completed = task.type.data.completed.toString() || '';
+    repeat = task.type.data.repeat.toString() || '';
   }
 
   if (task.isEdit) {
