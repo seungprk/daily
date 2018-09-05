@@ -1,4 +1,5 @@
 /* eslint no-alert: 0 */
+import { putThenUpdateRepeat } from './repeat';
 
 const getTasks = userId => fetch(`users/${userId}/tasks`)
   .then(res => res.json());
@@ -98,11 +99,18 @@ const patchTask = (task, userId) => fetch(`/users/${userId}/tasks/${task.id}`, {
     if (response.status !== 204) throw new Error('Patch failed');
   });
 
-export const patchThenUpdateTask = (task, userId) => dispatch => patchTask(task, userId)
-  .then(
-    () => dispatch(updateTask(task)),
-    error => alert(error),
-  );
+export const patchThenUpdateTask = (task, userId) => (dispatch) => {
+  patchTask(task, userId)
+    .then(
+      () => dispatch(updateTask(task)),
+      error => alert(error),
+    );
+
+  if (task.type.name === 'repeat') {
+    const { completed, repeat } = task.type.data;
+    putThenUpdateRepeat(task.id, completed, repeat, userId);
+  }
+};
 
 const deleteRequest = (taskId, userId) => fetch(`/users/${userId}/tasks/${taskId}`, {
   method: 'DELETE',

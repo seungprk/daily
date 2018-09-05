@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
 import ItemDisplay from '.';
 import {
-  updateTask,
+  patchThenUpdateTask,
   reqThenDeleteTask,
-  patchThenToggleEdit,
+  toggleEdit,
 } from '../../actions/tasks';
+import { putThenUpdateRepeat } from '../../actions/repeat';
 
 const mapStateToProps = (state, ownProps) => ({
   task: ownProps.task,
@@ -18,10 +19,18 @@ const mergeProps = (stateProps, dispatchProps) => {
   return {
     task,
     changeType: (type) => {
-      const changedTask = { ...task, type };
-      dispatch(updateTask(changedTask, user.id));
+      let data;
+      if (type.name === 'repeat') {
+        data = { completed: '0', repeat: '2' };
+        dispatch(putThenUpdateRepeat(task.id, 0, 2, user.id));
+      } else if (type.name === 'list') {
+        data = [];
+      }
+
+      const changedTask = { ...task, type: { ...type, data } };
+      dispatch(patchThenUpdateTask(changedTask, user.id));
     },
-    toggleEdit: () => dispatch(patchThenToggleEdit(task, user.id)),
+    toggleEdit: () => dispatch(toggleEdit(task.id)),
     deleteTask: () => dispatch(reqThenDeleteTask(task.id, user.id)),
   };
 };

@@ -3,7 +3,11 @@ const pool = require('../connection.js');
 exports.getRepeats = taskId => pool.query('SELECT * FROM tasks WHERE tasks_id = $1 ORDER BY id', [taskId])
   .then(res => res.rows);
 
-exports.addRepeat = (taskId, completed, repeat) => pool.query('INSERT INTO repeats (tasks_id, completed, repeat) VALUES ($1, $2, $3), RETURNING id', [
+exports.upsertRepeat = (taskId, completed, repeat, userId) => pool.query(`
+    INSERT INTO repeats (tasks_id, completed, repeat) VALUES ($1, $2, $3)
+    ON CONFLICT (tasks_id)
+    DO UPDATE SET completed = $2, repeat = $3
+  `, [
   taskId,
   completed,
   repeat,

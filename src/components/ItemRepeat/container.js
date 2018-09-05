@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import ItemRepeat from '.';
-import { updateTask } from '../../actions/tasks';
+import { putThenUpdateRepeat, updateRepeat } from '../../actions/repeat';
 
 const mapStateToProps = (state, ownProps) => ({
   task: ownProps.task,
@@ -15,17 +15,12 @@ const mergeProps = (stateProps, dispatchProps) => {
     task,
     updateInput: (e) => {
       const { id, value } = e.target;
-      const changedTask = {
-        ...task,
-        type: {
-          ...task.type,
-          data: {
-            ...task.type.data,
-            [id]: value,
-          },
-        },
-      };
-      dispatch(updateTask(changedTask, user.id));
+      if (id === 'repeat') dispatch(updateRepeat(task.id, task.type.data.completed, value, user.id));
+      else if (id === 'completed') dispatch(updateRepeat(task.id, value, task.type.data.repeat, user.id));
+    },
+    saveRepeat: () => {
+      const { completed, repeat } = task.type.data;
+      dispatch(putThenUpdateRepeat(task.id, completed, repeat, user.id));
     },
   };
 };

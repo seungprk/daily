@@ -15,8 +15,7 @@ CREATE TABLE tasks (
 );
 
 CREATE TABLE repeats (
-  id SERIAL PRIMARY KEY,
-  tasks_id INTEGER NOT NULL,
+  tasks_id INTEGER PRIMARY KEY,
   completed INTEGER NOT NULL,
   repeat INTEGER NOT NULL
 );

@@ -19,6 +19,22 @@ const tasks = (state = [], action) => {
       });
     case 'DELETE_TASK':
       return state.filter(task => task.id !== action.id);
+    case 'UPDATE_REPEAT':
+      return state.map((task) => {
+        if (task.id === action.taskId) {
+          return {
+            ...task,
+            type: {
+              name: task.type.name,
+              data: {
+                completed: action.completed,
+                repeat: action.repeat,
+              },
+            },
+          };
+        }
+        return task;
+      });
     default:
       return state;
   }

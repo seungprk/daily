@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ItemRepeat = ({ task, updateInput }) => {
+const ItemRepeat = ({ task, updateInput, saveRepeat }) => {
   let completed = '';
   let repeat = '';
   if (task.type.data) {
@@ -12,8 +12,8 @@ const ItemRepeat = ({ task, updateInput }) => {
   if (task.isEdit) {
     return (
       <span>
-        <input id="completed" type="number" value={completed} onChange={updateInput} />
-        <input id="repeat" type="number" value={repeat} onChange={updateInput} />
+        <input id="completed" type="number" value={completed} onChange={updateInput} onBlur={saveRepeat} />
+        <input id="repeat" type="number" value={repeat} onChange={updateInput} onBlur={saveRepeat} />
       </span>
     );
   }
@@ -37,6 +37,7 @@ ItemRepeat.propTypes = {
     }).isRequired,
   }).isRequired,
   updateInput: PropTypes.func.isRequired,
+  saveRepeat: PropTypes.func.isRequired,
 };
 
 export default ItemRepeat;
