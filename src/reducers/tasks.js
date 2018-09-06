@@ -35,6 +35,25 @@ const tasks = (state = [], action) => {
         }
         return task;
       });
+    case 'UPDATE_SUB_LIST_ITEM':
+      return state.map((task) => {
+        if (task.id === action.taskId) {
+          const data = task.type.data || [];
+          data.push({
+            id: action.itemId,
+            text: action.text,
+            completed: false,
+          });
+          return {
+            ...task,
+            type: {
+              name: task.type.name,
+              data,
+            },
+          };
+        }
+        return task;
+      });
     default:
       return state;
   }

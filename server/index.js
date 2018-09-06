@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const Task = require('../db/models/Task.js');
 const User = require('../db/models/User.js');
 const Repeat = require('../db/models/Repeat.js');
+const SubListItem = require('../db/models/SubListItem.js');
 
 const PORT = process.env.PORT || 8080;
 
@@ -105,6 +106,14 @@ app.put('/users/:userId/tasks/:taskId/repeat', (req, res) => {
       if (allowed) res.sendStatus(204);
       else res.sendStatus(401);
     });
+});
+
+app.post('/users/:userId/tasks/:taskId/items', (req, res) => {
+  const { userId, taskId } = req.params;
+  const { text } = req.body;
+
+  SubListItem.addItem(taskId, text, userId)
+    .then(itemId => res.status(201).send(JSON.stringify(itemId)));
 });
 
 app.listen(PORT, () => {

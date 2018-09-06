@@ -14,7 +14,6 @@ const loadTasks = (tasks) => {
 
 export const getThenLoadTasks = userId => dispatch => getTasks(userId)
   .then((tasks) => {
-    console.log(tasks);
     const isEditAddedTasks = tasks.map(task => ({ ...task, isEdit: false }));
     dispatch(loadTasks(isEditAddedTasks));
   });

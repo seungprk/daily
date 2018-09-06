@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import ItemList from '.';
-import { updateTask } from '../../actions/tasks';
+import { postThenAddItem } from '../../actions/subListItem';
 
 const mapStateToProps = (state, ownProps) => ({
   task: ownProps.task,
@@ -13,19 +13,7 @@ const mergeProps = (stateProps, dispatchProps) => {
 
   return {
     task,
-    addItem: (text) => {
-      const data = task.type.data || [];
-      data.push({ text, completed: false });
-
-      const changedTask = {
-        ...task,
-        type: {
-          ...task.type,
-          data,
-        },
-      };
-      dispatch(updateTask(changedTask, user.id));
-    },
+    addItem: text => dispatch(postThenAddItem(task.id, text, user.id)),
   };
 };
 
