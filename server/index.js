@@ -116,6 +116,16 @@ app.post('/users/:userId/tasks/:taskId/items', (req, res) => {
     .then(itemId => res.status(201).send(JSON.stringify(itemId)));
 });
 
+
+app.delete('/users/:userId/tasks/:taskId/items/:itemId', (req, res) => {
+  const { userId, taskId, itemId } = req.params;
+  SubListItem.delete(userId, taskId, itemId)
+    .then((allowed) => {
+      if (allowed) res.sendStatus(200);
+      else res.sendStatus(401);
+    });
+});
+
 app.listen(PORT, () => {
   console.log(`Listening at ${PORT}...`);
 });

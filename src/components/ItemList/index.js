@@ -1,5 +1,5 @@
 import React from 'react';
-import SubListItem from '../SubListItem';
+import SubListItemContainer from '../SubListItem/container';
 
 class ItemList extends React.Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class ItemList extends React.Component {
     const { subListItems } = task;
     return (
       <div>
-        {subListItems ? subListItems.map(item => <SubListItem {...item} isEdit={task.isEdit} />) : null}
+        {subListItems ? subListItems.map(item => <SubListItemContainer {...item} task={task} />) : null}
         <div>
           <input type="text" value={value} onChange={this.handleChange} />
           <button type="button" onClick={this.handleAdd}>

@@ -22,12 +22,24 @@ const tasks = (state = [], action) => {
     case 'UPDATE_SUB_LIST_ITEM':
       return state.map((task) => {
         if (task.id === action.taskId) {
-          const subListItems = task.subListItems || [];
-          subListItems.push({
-            id: action.itemId,
-            text: action.text,
-            completed: false,
-          });
+          return {
+            ...task,
+            subListItems: [
+              ...task.subListItems,
+              {
+                id: action.itemId,
+                text: action.text,
+                completed: false,
+              },
+            ],
+          };
+        }
+        return task;
+      });
+    case 'REMOVE_SUB_LIST_ITEM':
+      return state.map((task) => {
+        if (task.id === action.taskId) {
+          const subListItems = task.subListItems.filter(item => item.id !== action.itemId);
           return {
             ...task,
             subListItems,

@@ -11,5 +11,9 @@ exports.addItem = (taskId, text, userId) => pool.query('INSERT INTO sub_list_ite
 ])
   .then(res => res.rows.map(row => row.id));
 
-exports.deleteSubListItem = itemId => pool.query('DELETE FROM tasks WHERE id = $1', [itemId])
+exports.delete = (userId, taskId, itemId) => pool.query('DELETE FROM sub_list_items WHERE users_id = $1 AND tasks_id = $2 AND id = $3', [
+  userId,
+  taskId,
+  itemId,
+])
   .then(res => res.rowCount > 0);
