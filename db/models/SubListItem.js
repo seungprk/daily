@@ -17,3 +17,10 @@ exports.delete = (userId, taskId, itemId) => pool.query('DELETE FROM sub_list_it
   itemId,
 ])
   .then(res => res.rowCount > 0);
+
+exports.toggle = (userId, taskId, itemId) => pool.query('UPDATE sub_list_items SET completed = NOT completed WHERE users_id = $1 AND tasks_id = $2 AND id = $3', [
+  userId,
+  taskId,
+  itemId,
+])
+  .then(res => res.rowCount > 0);

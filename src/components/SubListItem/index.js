@@ -1,9 +1,10 @@
 import React from 'react';
 
-const SubListItem = ({ text, completed, isEdit, deleteItem }) => (
+const SubListItem = ({ text, completed, isEdit, deleteItem, toggleItem }) => (
   <div>
+    {completed ? 'CROSSED OUT' : ''}
     {text}
-    <button type="button">
+    <button type="button" onClick={toggleItem}>
       Done
     </button>
     {isEdit ? (

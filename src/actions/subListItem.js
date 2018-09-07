@@ -48,3 +48,24 @@ export const deleteThenRemoveItem = (itemId, taskId, userId) => (dispatch) => {
       error => alert(error),
     );
 };
+
+const patchToggle = (itemId, taskId, userId) => fetch(`/users/${userId}/tasks/${taskId}/items/${itemId}`, {
+  method: 'PATCH',
+})
+  .then((response) => {
+    if (response.status !== 204) throw new Error('Patch failed');
+  });
+
+const toggleItem = (itemId, taskId) => ({
+  type: 'TOGGLE_SUB_LIST_ITEM',
+  itemId,
+  taskId,
+});
+
+export const patchThenToggleItem = (itemId, taskId, userId) => (dispatch) => {
+  patchToggle(itemId, taskId, userId)
+    .then(
+      () => dispatch(toggleItem(itemId, taskId)),
+      error => alert(error),
+    );
+};

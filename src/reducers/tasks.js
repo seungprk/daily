@@ -47,6 +47,21 @@ const tasks = (state = [], action) => {
         }
         return task;
       });
+    case 'TOGGLE_SUB_LIST_ITEM':
+      return state.map((task) => {
+        if (task.id === action.taskId) {
+          const subListItems = task.subListItems.map(item => ({
+            ...item,
+            completed: item.id === action.itemId ? !item.completed : item.completed,
+          }));
+
+          return {
+            ...task,
+            subListItems,
+          };
+        }
+        return task;
+      });
     default:
       return state;
   }

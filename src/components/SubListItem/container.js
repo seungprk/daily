@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import SubListItem from '.';
-import { deleteThenRemoveItem } from '../../actions/subListItem';
+import { deleteThenRemoveItem, patchThenToggleItem } from '../../actions/subListItem';
 
 const mapStateToProps = (state, ownProps) => ({
   ...ownProps,
@@ -22,6 +22,7 @@ const mergeProps = (stateProps, dispatchProps) => {
     completed,
     isEdit: task.isEdit,
     deleteItem: () => dispatch(deleteThenRemoveItem(id, task.id, user.id)),
+    toggleItem: () => dispatch(patchThenToggleItem(id, task.id, user.id)),
   };
 };
 
