@@ -2,16 +2,10 @@ const pool = require('../connection.js');
 
 exports.getTasks = userId => Promise.all([
   pool.query('SELECT * FROM tasks WHERE users_id = $1 ORDER BY id', [userId]),
-  pool.query('SELECT * FROM tasks INNER JOIN repeats ON tasks.id = repeats.tasks_id WHERE tasks.users_id = $1', [userId]),
   pool.query('SELECT * FROM sub_list_items WHERE users_id = $1', [userId]),
 ])
   .then((res) => {
-    const [tasks, repeats, subListItems] = res;
-
-    const repeatsMap = {};
-    repeats.rows.forEach((repeat) => {
-      repeatsMap[repeat.tasks_id] = repeat;
-    });
+    const [tasks, subListItems] = res;
 
     const itemsMap = {};
     subListItems.rows.forEach((item) => {
@@ -19,32 +13,23 @@ exports.getTasks = userId => Promise.all([
       else itemsMap[item.tasks_id] = [item];
     });
 
-    return tasks.rows.map((task) => {
-      let data;
-      if (task.type === 'repeat') data = repeatsMap[task.id];
-      else if (task.type === 'list') data = itemsMap[task.id];
-
-      return {
-        ...task,
-        date: Date.parse(task.date),
-        type: {
-          name: task.type,
-          data,
-        },
-      };
-    });
+    return tasks.rows.map(task => ({
+      ...task,
+      date: Date.parse(task.date),
+      subListItems: itemsMap[task.id],
+    }));
   });
 
 exports.addTasks = (tasks, userId) => {
   let counter = 1;
   const queryValues = [];
-  let queryStr = 'INSERT INTO tasks (users_id, text, date, type) VALUES';
+  let queryStr = 'INSERT INTO tasks (users_id, text, completed, repeat, date) VALUES';
 
   tasks.forEach((task) => {
-    queryStr += ` ($${counter}, $${counter + 1}, $${counter + 2}, $${counter + 3}),`;
-    const taskItems = [userId, task.text, task.date, task.type.name];
+    queryStr += ` ($${counter}, $${counter + 1}, $${counter + 2}, $${counter + 3}, $${counter + 4}),`;
+    const taskItems = [userId, task.text, task.completed, task.repeat, task.date];
     queryValues.push(...taskItems);
-    counter += 4;
+    counter += 5;
   });
 
   queryStr = queryStr.slice(0, -1);
@@ -54,10 +39,10 @@ exports.addTasks = (tasks, userId) => {
     .then(res => res.rows.map(row => row.id));
 };
 
-exports.updateTask = (task, userId) => pool.query('UPDATE tasks SET text = $1, completed = $2, type = $3 WHERE id = $4 AND users_id = $5', [
+exports.updateTask = (task, userId) => pool.query('UPDATE tasks SET text = $1, completed = $2, repeat = $3 WHERE id = $4 AND users_id = $5', [
   task.text,
   task.completed,
-  task.type.name,
+  task.repeat,
   task.id,
   userId,
 ])

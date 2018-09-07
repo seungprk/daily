@@ -16,6 +16,9 @@ const ItemDisplay = (props) => {
       <span className={textClass}>
         {task.text}
       </span>
+      <span>
+        {`${task.completed} / ${task.repeat}`}
+      </span>
       <button type="button" onClick={toggleTask}>
         Done
       </button>

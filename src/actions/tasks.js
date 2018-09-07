@@ -1,6 +1,4 @@
 /* eslint no-alert: 0 */
-import { putThenUpdateRepeat } from './repeat';
-
 const getTasks = userId => fetch(`users/${userId}/tasks`)
   .then(res => res.json());
 
@@ -58,13 +56,13 @@ export const postThenCopyTasks = (tasks, userId) => (dispatch) => {
     );
 };
 
-export const postThenAddTask = (text, type, userId) => (dispatch) => {
+export const postThenAddTask = (text, userId) => (dispatch) => {
   const now = new Date(Date.now());
   const task = {
     text,
-    type,
+    completed: 0,
+    repeat: 1,
     date: `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`,
-    completed: false,
     isEdit: true,
   };
 
@@ -105,11 +103,6 @@ export const patchThenUpdateTask = (task, userId) => (dispatch) => {
       () => dispatch(updateTask(task)),
       error => alert(error),
     );
-
-  if (task.type.name === 'repeat') {
-    const { completed, repeat } = task.type.data;
-    putThenUpdateRepeat(task.id, completed, repeat, userId);
-  }
 };
 
 const deleteRequest = (taskId, userId) => fetch(`/users/${userId}/tasks/${taskId}`, {

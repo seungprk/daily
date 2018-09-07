@@ -23,10 +23,10 @@ class ItemList extends React.Component {
   render() {
     const { task } = this.props;
     const { value } = this.state;
-    const { data } = task.type;
+    const { subListItems } = task;
     return (
       <div>
-        {data ? data.map(item => <SubListItem {...item} isEdit={task.isEdit} />) : null}
+        {subListItems ? subListItems.map(item => <SubListItem {...item} isEdit={task.isEdit} />) : null}
         <div>
           <input type="text" value={value} onChange={this.handleChange} />
           <button type="button" onClick={this.handleAdd}>
