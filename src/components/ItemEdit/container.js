@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import ItemDisplay from '.';
 import {
-  patchThenUpdateTask,
   reqThenDeleteTask,
   toggleEdit,
 } from '../../actions/tasks';
@@ -17,15 +16,6 @@ const mergeProps = (stateProps, dispatchProps) => {
 
   return {
     task,
-    changeType: (type) => {
-      let data;
-      if (type.name === 'list') {
-        data = [];
-      }
-
-      const changedTask = { ...task, type: { ...type, data } };
-      dispatch(patchThenUpdateTask(changedTask, user.id));
-    },
     toggleEdit: () => dispatch(toggleEdit(task.id)),
     deleteTask: () => dispatch(reqThenDeleteTask(task.id, user.id)),
   };

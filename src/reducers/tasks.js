@@ -19,37 +19,18 @@ const tasks = (state = [], action) => {
       });
     case 'DELETE_TASK':
       return state.filter(task => task.id !== action.id);
-    case 'UPDATE_REPEAT':
-      return state.map((task) => {
-        if (task.id === action.taskId) {
-          return {
-            ...task,
-            type: {
-              name: task.type.name,
-              data: {
-                completed: action.completed,
-                repeat: action.repeat,
-              },
-            },
-          };
-        }
-        return task;
-      });
     case 'UPDATE_SUB_LIST_ITEM':
       return state.map((task) => {
         if (task.id === action.taskId) {
-          const data = task.type.data || [];
-          data.push({
+          const subListItems = task.subListItems || [];
+          subListItems.push({
             id: action.itemId,
             text: action.text,
             completed: false,
           });
           return {
             ...task,
-            type: {
-              name: task.type.name,
-              data,
-            },
+            subListItems,
           };
         }
         return task;
