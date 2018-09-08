@@ -60,8 +60,7 @@ export const postThenAddTask = (text, userId) => (dispatch) => {
   const now = new Date(Date.now());
   const task = {
     text,
-    completed: 0,
-    repeat: 1,
+    completed: false,
     date: `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`,
     isEdit: true,
   };

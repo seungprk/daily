@@ -23,13 +23,13 @@ exports.getTasks = userId => Promise.all([
 exports.addTasks = (tasks, userId) => {
   let counter = 1;
   const queryValues = [];
-  let queryStr = 'INSERT INTO tasks (users_id, text, completed, repeat, date) VALUES';
+  let queryStr = 'INSERT INTO tasks (users_id, text, completed, date) VALUES';
 
   tasks.forEach((task) => {
-    queryStr += ` ($${counter}, $${counter + 1}, $${counter + 2}, $${counter + 3}, $${counter + 4}),`;
-    const taskItems = [userId, task.text, task.completed, task.repeat, task.date];
+    queryStr += ` ($${counter}, $${counter + 1}, $${counter + 2}, $${counter + 3}),`;
+    const taskItems = [userId, task.text, task.completed, task.date];
     queryValues.push(...taskItems);
-    counter += 5;
+    counter += taskItems.length;
   });
 
   queryStr = queryStr.slice(0, -1);
@@ -39,10 +39,9 @@ exports.addTasks = (tasks, userId) => {
     .then(res => res.rows.map(row => row.id));
 };
 
-exports.updateTask = (task, userId) => pool.query('UPDATE tasks SET text = $1, completed = $2, repeat = $3 WHERE id = $4 AND users_id = $5', [
+exports.updateTask = (task, userId) => pool.query('UPDATE tasks SET text = $1, completed = $2 WHERE id = $3 AND users_id = $4', [
   task.text,
   task.completed,
-  task.repeat,
   task.id,
   userId,
 ])

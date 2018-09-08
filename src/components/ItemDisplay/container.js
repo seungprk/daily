@@ -20,7 +20,7 @@ const mergeProps = (stateProps, dispatchProps) => {
     toggleTask: () => {
       const changedTask = {
         ...task,
-        completed: task.completed === 0 ? task.completed + 1 : task.completed - 1,
+        completed: !task.completed,
       };
       dispatch(patchThenUpdateTask(changedTask, user.id));
     },

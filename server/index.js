@@ -5,7 +5,6 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const Task = require('../db/models/Task.js');
 const User = require('../db/models/User.js');
-const Repeat = require('../db/models/Repeat.js');
 const SubListItem = require('../db/models/SubListItem.js');
 
 const PORT = process.env.PORT || 8080;
@@ -93,17 +92,6 @@ app.delete('/users/:userId/tasks/:taskId', (req, res) => {
   Task.deleteTask(taskId, userId)
     .then((allowed) => {
       if (allowed) res.sendStatus(200);
-      else res.sendStatus(401);
-    });
-});
-
-app.put('/users/:userId/tasks/:taskId/repeat', (req, res) => {
-  const { userId, taskId } = req.params;
-  const { completed, repeat } = req.body;
-
-  Repeat.upsertRepeat(taskId, completed, repeat, userId)
-    .then((allowed) => {
-      if (allowed) res.sendStatus(204);
       else res.sendStatus(401);
     });
 });
