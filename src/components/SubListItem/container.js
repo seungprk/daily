@@ -20,7 +20,6 @@ const mergeProps = (stateProps, dispatchProps) => {
   return {
     text,
     completed,
-    isEdit: task.isEdit,
     deleteItem: () => dispatch(deleteThenRemoveItem(id, task.id, user.id)),
     toggleItem: () => dispatch(patchThenToggleItem(id, task.id, user.id)),
   };

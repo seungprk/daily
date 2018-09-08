@@ -1,6 +1,9 @@
 /* eslint no-alert: 0 */
 const getTasks = userId => fetch(`users/${userId}/tasks`)
-  .then(res => res.json());
+  .then((res) => {
+    if (res.status !== 200) throw new Error('Get failed');
+    return res.json();
+  });
 
 const loadTasks = (tasks) => {
   const action = {
@@ -11,10 +14,7 @@ const loadTasks = (tasks) => {
 };
 
 export const getThenLoadTasks = userId => dispatch => getTasks(userId)
-  .then((tasks) => {
-    const isEditAddedTasks = tasks.map(task => ({ ...task, isEdit: false }));
-    dispatch(loadTasks(isEditAddedTasks));
-  });
+  .then(tasks => dispatch(loadTasks(tasks)));
 
 const postTasks = (tasks, userId) => fetch(`/users/${userId}/tasks`, {
   method: 'POST',
@@ -23,9 +23,9 @@ const postTasks = (tasks, userId) => fetch(`/users/${userId}/tasks`, {
   },
   body: JSON.stringify(tasks),
 })
-  .then((response) => {
-    if (response.status !== 201) throw new Error('Post failed');
-    return response.json();
+  .then((res) => {
+    if (res.status !== 201) throw new Error('Post failed');
+    return res.json();
   });
 
 const addTasks = (tasks) => {
@@ -62,7 +62,6 @@ export const postThenAddTask = (text, userId) => (dispatch) => {
     text,
     completed: false,
     date: `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`,
-    isEdit: true,
     subListItems: [],
   };
 
@@ -93,8 +92,8 @@ const patchTask = (task, userId) => fetch(`/users/${userId}/tasks/${task.id}`, {
   },
   body: JSON.stringify(task),
 })
-  .then((response) => {
-    if (response.status !== 204) throw new Error('Patch failed');
+  .then((res) => {
+    if (res.status !== 204) throw new Error('Patch failed');
   });
 
 export const patchThenUpdateTask = (task, userId) => (dispatch) => {
@@ -108,8 +107,8 @@ export const patchThenUpdateTask = (task, userId) => (dispatch) => {
 const deleteRequest = (taskId, userId) => fetch(`/users/${userId}/tasks/${taskId}`, {
   method: 'DELETE',
 })
-  .then((response) => {
-    if (response.status !== 200) throw new Error('Delete failed');
+  .then((res) => {
+    if (res.status !== 200) throw new Error('Delete failed');
   });
 
 const deleteTask = (id) => {
@@ -123,19 +122,5 @@ const deleteTask = (id) => {
 export const reqThenDeleteTask = (taskId, userId) => dispatch => deleteRequest(taskId, userId)
   .then(
     () => dispatch(deleteTask(taskId)),
-    error => alert(error),
-  );
-
-export const toggleEdit = (id) => {
-  const action = {
-    type: 'TOGGLE_EDIT',
-    id,
-  };
-  return action;
-};
-
-export const patchThenToggleEdit = (task, userId) => dispatch => patchTask(task, userId)
-  .then(
-    () => dispatch(toggleEdit(task.id)),
     error => alert(error),
   );

@@ -24,7 +24,6 @@ const mergeProps = (stateProps, dispatchProps) => {
       };
       dispatch(patchThenUpdateTask(changedTask, user.id));
     },
-    toggleEdit: () => dispatch(toggleEdit(task.id)),
     deleteTask: () => dispatch(reqThenDeleteTask(task.id, user.id)),
   };
 };

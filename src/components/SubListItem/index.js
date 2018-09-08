@@ -1,18 +1,21 @@
 import React from 'react';
+import './style.css';
 
-const SubListItem = ({ text, completed, isEdit, deleteItem, toggleItem }) => (
-  <div>
-    {completed ? 'CROSSED OUT' : ''}
-    {text}
-    <button type="button" onClick={toggleItem}>
-      Done
-    </button>
-    {isEdit ? (
+const SubListItem = ({ text, completed, deleteItem, toggleItem }) => {
+  const textClass = completed ? 'sub-list-item--done' : '';
+  return (
+    <div>
+      <span className={textClass}>
+        {`- ${text}`}
+      </span>
+      <button type="button" onClick={toggleItem}>
+        Done
+      </button>
       <button type="button" onClick={deleteItem}>
         Delete
       </button>
-    ) : null}
-  </div>
-);
+    </div>
+  );
+};
 
 export default SubListItem;

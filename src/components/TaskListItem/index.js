@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ItemEditContainer from '../ItemEdit/container';
 import ItemDisplayContainer from '../ItemDisplay/container';
 import ItemListContainer from '../ItemList/container';
 
 const TaskListItem = ({ task }) => (
   <div>
-    {task.isEdit ? <ItemEditContainer task={task} /> : <ItemDisplayContainer task={task} />}
+    <ItemDisplayContainer task={task} />
     <ItemListContainer task={task} />
   </div>
 );

@@ -6,7 +6,6 @@ const ItemDisplay = (props) => {
   const {
     task,
     toggleTask,
-    toggleEdit,
     deleteTask,
   } = props;
 
@@ -21,9 +20,6 @@ const ItemDisplay = (props) => {
       </span>
       <button type="button" onClick={toggleTask}>
         Done
-      </button>
-      <button type="button" onClick={toggleEdit}>
-        Edit
       </button>
       <button type="button" onClick={deleteTask}>
         Delete
@@ -42,7 +38,6 @@ ItemDisplay.propTypes = {
     }).isRequired,
   }).isRequired,
   toggleTask: PropTypes.func.isRequired,
-  toggleEdit: PropTypes.func.isRequired,
   deleteTask: PropTypes.func.isRequired,
 };
 
