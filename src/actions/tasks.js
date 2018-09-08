@@ -63,6 +63,7 @@ export const postThenAddTask = (text, userId) => (dispatch) => {
     completed: false,
     date: `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`,
     isEdit: true,
+    subListItems: [],
   };
 
   const handleSuccess = (taskIds) => {

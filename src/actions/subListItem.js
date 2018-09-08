@@ -10,9 +10,9 @@ const postItem = (taskId, text, userId) => fetch(`/users/${userId}/tasks/${taskI
     return response.json();
   });
 
-export const updateItem = (taskId, itemId, text) => {
+const addItem = (taskId, itemId, text) => {
   const action = {
-    type: 'UPDATE_SUB_LIST_ITEM',
+    type: 'ADD_SUB_LIST_ITEM',
     taskId,
     itemId,
     text,
@@ -23,7 +23,7 @@ export const updateItem = (taskId, itemId, text) => {
 export const postThenAddItem = (taskId, text, userId) => (dispatch) => {
   postItem(taskId, text, userId)
     .then(
-      itemId => dispatch(updateItem(taskId, itemId, text)),
+      itemId => dispatch(addItem(taskId, itemId, text)),
       error => alert(error),
     );
 };

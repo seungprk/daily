@@ -19,7 +19,7 @@ const tasks = (state = [], action) => {
       });
     case 'DELETE_TASK':
       return state.filter(task => task.id !== action.id);
-    case 'UPDATE_SUB_LIST_ITEM':
+    case 'ADD_SUB_LIST_ITEM':
       return state.map((task) => {
         if (task.id === action.taskId) {
           return {
