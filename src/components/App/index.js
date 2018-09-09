@@ -24,23 +24,19 @@ class App extends React.Component {
           </h1>
         </header>
         <LoginContainer />
-        {user ? (
+        {user && (
           <div>
             <ControlsContainer />
             <TaskListContainer targetDate={today} />
           </div>
-        ) : null}
+        )}
       </div>
     );
   }
 }
 
 App.propTypes = {
-  user: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    username: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-  }),
+  user: PropTypes.shape({}),
   checkLogin: PropTypes.func.isRequired,
 };
 

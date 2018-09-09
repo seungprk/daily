@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import SubListItemContainer from '../SubListItem/container';
 
-class ItemList extends React.Component {
+class SubList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,7 +29,10 @@ class ItemList extends React.Component {
     const { value } = this.state;
 
     addItem(value);
-    this.setState({ value: '' });
+    this.setState({
+      value: '',
+      isAdd: false,
+    });
   }
 
   render() {
@@ -54,4 +58,9 @@ class ItemList extends React.Component {
   }
 }
 
-export default ItemList;
+SubList.propTypes = {
+  task: PropTypes.shape({}).isRequired,
+  addItem: PropTypes.func.isRequired,
+};
+
+export default SubList;

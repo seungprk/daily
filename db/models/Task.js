@@ -17,7 +17,7 @@ exports.getTasks = userId => Promise.all([
     return tasks.rows.map(task => ({
       ...task,
       date: Date.parse(task.date),
-      subListItems: itemsMap[task.id],
+      subListItems: itemsMap[task.id] || [],
     }));
   });
 

@@ -82,12 +82,12 @@ class Login extends React.Component {
             Username
             <input id="username" type="text" value={username} onChange={this.handleChange} />
           </label>
-          {isSignUp ? (
+          {isSignUp && (
             <label htmlFor="email">
               Email
               <input id="email" type="email" value={email} onChange={this.handleChange} />
             </label>
-          ) : null}
+          )}
           <label htmlFor="password">
             Password
             <input id="password" type="password" value={password} onChange={this.handleChange} />

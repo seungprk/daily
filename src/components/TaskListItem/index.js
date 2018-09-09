@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import SubListContainer from '../SubList/container';
 import './style.css';
 
-const ItemDisplay = (props) => {
+const TaskListItem = (props) => {
   const {
     task,
     toggleTask,
@@ -35,17 +35,13 @@ const ItemDisplay = (props) => {
   );
 };
 
-ItemDisplay.propTypes = {
+TaskListItem.propTypes = {
   task: PropTypes.shape({
-    id: PropTypes.number.isRequired,
     text: PropTypes.string.isRequired,
     completed: PropTypes.bool.isRequired,
-    type: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }).isRequired,
   }).isRequired,
   toggleTask: PropTypes.func.isRequired,
   deleteTask: PropTypes.func.isRequired,
 };
 
-export default ItemDisplay;
+export default TaskListItem;
