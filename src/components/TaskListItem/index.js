@@ -1,16 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ItemDisplayContainer from '../ItemDisplay/container';
-import ItemListContainer from '../ItemList/container';
+import SubListContainer from '../SubList/container';
+import './style.css';
 
-const TaskListItem = ({ task }) => (
-  <div>
-    <ItemDisplayContainer task={task} />
-    <ItemListContainer task={task} />
-  </div>
-);
+const ItemDisplay = (props) => {
+  const {
+    task,
+    toggleTask,
+    deleteTask,
+  } = props;
 
-TaskListItem.propTypes = {
+  const hasCounter = task.subListItems.length > 0;
+  const completedCount = task.subListItems.reduce((sum, item) => item.completed + sum, 0);
+
+  const textClass = task.completed ? 'task-list-item--done' : '';
+  return (
+    <div>
+      <span className={textClass}>
+        {task.text}
+      </span>
+      {hasCounter ? (
+        <span className={textClass}>
+          {`${completedCount} / ${task.subListItems.length}`}
+        </span>
+      ) : null}
+      <button type="button" onClick={toggleTask}>
+        Done
+      </button>
+      <button type="button" onClick={deleteTask}>
+        Delete
+      </button>
+      <SubListContainer task={task} />
+    </div>
+  );
+};
+
+ItemDisplay.propTypes = {
   task: PropTypes.shape({
     id: PropTypes.number.isRequired,
     text: PropTypes.string.isRequired,
@@ -19,6 +44,8 @@ TaskListItem.propTypes = {
       name: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  toggleTask: PropTypes.func.isRequired,
+  deleteTask: PropTypes.func.isRequired,
 };
 
-export default TaskListItem;
+export default ItemDisplay;

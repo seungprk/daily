@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import ItemList from '.';
+import SubList from '.';
 import { postThenAddItem } from '../../actions/subListItem';
 
 const mapStateToProps = (state, ownProps) => ({
@@ -21,4 +21,4 @@ export default connect(
   mapStateToProps,
   null,
   mergeProps,
-)(ItemList);
+)(SubList);

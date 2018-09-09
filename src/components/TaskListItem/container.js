@@ -1,9 +1,8 @@
 import { connect } from 'react-redux';
-import ItemDisplay from '.';
+import TaskListItem from '.';
 import {
   patchThenUpdateTask,
   reqThenDeleteTask,
-  toggleEdit,
 } from '../../actions/tasks';
 
 const mapStateToProps = (state, ownProps) => ({
@@ -32,4 +31,4 @@ export default connect(
   mapStateToProps,
   null,
   mergeProps,
-)(ItemDisplay);
+)(TaskListItem);

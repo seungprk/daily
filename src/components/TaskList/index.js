@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TaskListItem from '../TaskListItem';
+import TaskListItemContainer from '../TaskListItem/container';
 
 const TaskList = ({ tasks }) => {
-  const createTaskListItem = task => <TaskListItem key={task.id} task={task} />;
+  const createTaskListItem = task => <TaskListItemContainer key={task.id} task={task} />;
   const activeTasks = tasks.filter(task => !task.completed).map(createTaskListItem);
   const completedTasks = tasks.filter(task => task.completed).map(createTaskListItem);
   return (
