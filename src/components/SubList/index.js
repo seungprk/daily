@@ -41,7 +41,7 @@ class SubList extends React.Component {
     const { subListItems } = task;
     return (
       <div>
-        {subListItems.map(item => <SubListItemContainer {...item} task={task} />)}
+        {subListItems.map(item => <SubListItemContainer {...item} key={item.id} task={task} />)}
         <div>
           {isAdd ? (
             <form onSubmit={this.handleAdd}>
