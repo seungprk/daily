@@ -3,9 +3,8 @@ const express = require('express');
 const cookieSession = require('cookie-session');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const Task = require('../db/models/Task.js');
-const User = require('../db/models/User.js');
-const SubListItem = require('../db/models/SubListItem.js');
+const loginRoute = require('./login.js');
+const usersRoute = require('./users.js');
 
 const PORT = process.env.PORT || 8080;
 
@@ -23,104 +22,9 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../build', 'index.html'));
 });
 
-app.get('/login', (req, res) => {
-  const { user } = req.session;
-  res.status(200).send({ user });
-});
+app.use('/login', loginRoute);
 
-app.post('/login', (req, res) => {
-  const { username, password } = req.body;
-  User.getIfValid(username, password)
-    .then((user) => {
-      if (user) {
-        req.session.user = user;
-        res.status(200).send(JSON.stringify(user));
-      } else {
-        res.sendStatus(401);
-      }
-    });
-});
-
-app.delete('/login', (req, res) => {
-  req.session = null;
-  res.sendStatus(200);
-});
-
-app.post('/users', (req, res) => {
-  const { username, email, password } = req.body;
-  User.create(username, email, password)
-    .catch((error) => {
-      console.error(error);
-      res.sendStatus(400);
-    })
-    .then(user => res.status(201).send(JSON.stringify(user)));
-});
-
-app.use('/users/:userId', (req, res, next) => {
-  const userId = parseInt(req.params.userId, 10);
-
-  if (req.session.user.id === userId) {
-    next();
-  } else {
-    res.sendStatus(403);
-  }
-});
-
-app.get('/users/:userId/tasks', (req, res) => {
-  Task.getTasks(req.params.userId)
-    .then(tasks => res.send(JSON.stringify(tasks)));
-});
-
-app.post('/users/:userId/tasks', (req, res) => {
-  Task.addTasks(req.body, req.params.userId)
-    .then(taskIds => res.status(201).send(JSON.stringify(taskIds)));
-});
-
-app.patch('/users/:userId/tasks/:taskId', (req, res) => {
-  const { userId } = req.params;
-
-  Task.updateTask(req.body, userId)
-    .then((allowed) => {
-      if (allowed) res.sendStatus(204);
-      else res.sendStatus(401);
-    });
-});
-
-app.delete('/users/:userId/tasks/:taskId', (req, res) => {
-  const { taskId, userId } = req.params;
-
-  Task.deleteTask(taskId, userId)
-    .then((allowed) => {
-      if (allowed) res.sendStatus(200);
-      else res.sendStatus(401);
-    });
-});
-
-app.post('/users/:userId/tasks/:taskId/items', (req, res) => {
-  const { userId, taskId } = req.params;
-  const { text } = req.body;
-
-  SubListItem.addItem(taskId, text, userId)
-    .then(itemId => res.status(201).send(JSON.stringify(itemId)));
-});
-
-app.delete('/users/:userId/tasks/:taskId/items/:itemId', (req, res) => {
-  const { userId, taskId, itemId } = req.params;
-  SubListItem.delete(userId, taskId, itemId)
-    .then((allowed) => {
-      if (allowed) res.sendStatus(200);
-      else res.sendStatus(401);
-    });
-});
-
-app.patch('/users/:userId/tasks/:taskId/items/:itemId', (req, res) => {
-  const { userId, taskId, itemId } = req.params;
-  SubListItem.toggle(userId, taskId, itemId)
-    .then((allowed) => {
-      if (allowed) res.sendStatus(204);
-      else res.sendStatus(401);
-    });
-});
+app.use('/users', usersRoute);
 
 app.listen(PORT, () => {
   console.log(`Listening at ${PORT}...`);
