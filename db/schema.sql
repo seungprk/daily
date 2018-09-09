@@ -12,3 +12,11 @@ CREATE TABLE tasks (
   completed BOOLEAN DEFAULT FALSE,
   date DATE NOT NULL
 );
+
+CREATE TABLE sub_list_items (
+  id SERIAL PRIMARY KEY,
+  tasks_id INTEGER NOT NULL,
+  users_id INTEGER NOT NULL,
+  text VARCHAR(200) NOT NULL,
+  completed BOOLEAN DEFAULT FALSE
+);

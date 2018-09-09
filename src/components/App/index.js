@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import logo from './logo.svg';
-import './App.css';
-import TaskListContainer from '../../containers/TaskListContainer';
-import ControlsContainer from '../../containers/ControlsContainer';
-import LoginContainer from '../../containers/LoginContainer';
+import './style.css';
+import TaskListContainer from '../TaskList/container';
+import ControlsContainer from '../Controls/container';
+import LoginContainer from '../Login/container';
 
 class App extends React.Component {
   componentDidMount() {
@@ -24,23 +24,19 @@ class App extends React.Component {
           </h1>
         </header>
         <LoginContainer />
-        {user ? (
+        {user && (
           <div>
             <ControlsContainer />
             <TaskListContainer targetDate={today} />
           </div>
-        ) : null}
+        )}
       </div>
     );
   }
 }
 
 App.propTypes = {
-  user: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    username: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-  }),
+  user: PropTypes.shape({}),
   checkLogin: PropTypes.func.isRequired,
 };
 

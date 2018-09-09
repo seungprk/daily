@@ -1,7 +1,9 @@
 /* eslint no-alert: 0 */
-
 const getTasks = userId => fetch(`users/${userId}/tasks`)
-  .then(res => res.json());
+  .then((res) => {
+    if (res.status !== 200) throw new Error('Get failed');
+    return res.json();
+  });
 
 const loadTasks = (tasks) => {
   const action = {
@@ -21,9 +23,9 @@ const postTasks = (tasks, userId) => fetch(`/users/${userId}/tasks`, {
   },
   body: JSON.stringify(tasks),
 })
-  .then((response) => {
-    if (response.status !== 201) throw new Error('Post failed');
-    return response.json();
+  .then((res) => {
+    if (res.status !== 201) throw new Error('Post failed');
+    return res.json();
   });
 
 const addTasks = (tasks) => {
@@ -58,8 +60,9 @@ export const postThenAddTask = (text, userId) => (dispatch) => {
   const now = new Date(Date.now());
   const task = {
     text,
-    date: `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`,
     completed: false,
+    date: `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`,
+    subListItems: [],
   };
 
   const handleSuccess = (taskIds) => {
@@ -74,32 +77,38 @@ export const postThenAddTask = (text, userId) => (dispatch) => {
     );
 };
 
-const patchToggle = (taskId, userId) => fetch(`/users/${userId}/tasks/${taskId}`, {
-  method: 'PATCH',
-})
-  .then((response) => {
-    if (response.status !== 204) throw new Error('Patch failed');
-  });
-
-const toggleTask = (id) => {
+export const updateTask = (task) => {
   const action = {
-    type: 'TOGGLE_TASK',
-    id,
+    type: 'UPDATE_TASK',
+    task,
   };
   return action;
 };
 
-export const patchThenToggleTask = (taskId, userId) => dispatch => patchToggle(taskId, userId)
-  .then(
-    () => dispatch(toggleTask(taskId)),
-    error => alert(error),
-  );
+const patchTask = (task, userId) => fetch(`/users/${userId}/tasks/${task.id}`, {
+  method: 'PATCH',
+  headers: {
+    'Content-Type': 'application/json; charset=utf-8',
+  },
+  body: JSON.stringify(task),
+})
+  .then((res) => {
+    if (res.status !== 204) throw new Error('Patch failed');
+  });
+
+export const patchThenUpdateTask = (task, userId) => (dispatch) => {
+  patchTask(task, userId)
+    .then(
+      () => dispatch(updateTask(task)),
+      error => alert(error),
+    );
+};
 
 const deleteRequest = (taskId, userId) => fetch(`/users/${userId}/tasks/${taskId}`, {
   method: 'DELETE',
 })
-  .then((response) => {
-    if (response.status !== 200) throw new Error('Delete failed');
+  .then((res) => {
+    if (res.status !== 200) throw new Error('Delete failed');
   });
 
 const deleteTask = (id) => {

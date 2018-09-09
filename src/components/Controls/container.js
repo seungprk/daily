@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import Controls from '../components/Controls/Controls';
-import { postThenAddTask, postThenCopyTasks } from '../actions/tasks';
+import Controls from '.';
+import { postThenAddTask, postThenCopyTasks } from '../../actions/tasks';
 
 const mapStateToProps = state => ({
   user: state.user,
@@ -19,7 +19,9 @@ const mergeProps = (stateProps, dispatchProps) => {
 
   return {
     addTask: text => dispatch(postThenAddTask(text, user.id)),
-    copyYesterday: () => dispatch(postThenCopyTasks(yesterdayTasks, user.id)),
+    copyYesterday: () => {
+      if (yesterdayTasks.length > 0) dispatch(postThenCopyTasks(yesterdayTasks, user.id));
+    },
   };
 };
 
