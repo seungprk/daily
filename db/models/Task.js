@@ -1,14 +1,15 @@
 const pool = require('../connection.js');
+const SubListItem = require('./SubListItem.js');
 
 exports.getTasks = userId => Promise.all([
   pool.query('SELECT * FROM tasks WHERE users_id = $1 ORDER BY id', [userId]),
-  pool.query('SELECT * FROM sub_list_items WHERE users_id = $1', [userId]),
+  SubListItem.getByUser(userId),
 ])
   .then((res) => {
     const [tasks, subListItems] = res;
 
     const itemsMap = {};
-    subListItems.rows.forEach((item) => {
+    subListItems.forEach((item) => {
       if (itemsMap[item.tasks_id]) itemsMap[item.tasks_id].push(item);
       else itemsMap[item.tasks_id] = [item];
     });
@@ -47,5 +48,8 @@ exports.updateTask = (task, userId) => pool.query('UPDATE tasks SET text = $1, c
 ])
   .then(res => res.rowCount > 0);
 
-exports.deleteTask = (taskId, userId) => pool.query('DELETE FROM tasks WHERE id = $1 AND users_id = $2', [taskId, userId])
-  .then(res => res.rowCount > 0);
+exports.deleteTask = (taskId, userId) => Promise.all([
+  pool.query('DELETE FROM tasks WHERE id = $1 AND users_id = $2', [taskId, userId]),
+  SubListItem.deleteByTask(userId, taskId),
+])
+  .then(res => res[0].rowCount > 0);
