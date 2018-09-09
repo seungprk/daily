@@ -1,1 +1,8 @@
+.login {
+  margin-left: auto;
+}
 
+.login__wrapper {
+  position: absolute;
+  right: 1em;
+}

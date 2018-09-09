@@ -10,12 +10,14 @@ class Login extends React.Component {
       email: '',
       password: '',
       isSignUp: false,
+      isDropdown: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleSwitch = this.handleSwitch.bind(this);
+    this.handleSignUpSwitch = this.handleSignUpSwitch.bind(this);
     this.handleLogOut = this.handleLogOut.bind(this);
+    this.toggleLoginBox = this.toggleLoginBox.bind(this);
   }
 
   handleSubmit(e) {
@@ -35,6 +37,8 @@ class Login extends React.Component {
       username: '',
       email: '',
       password: '',
+      isSignUp: false,
+      isDropdown: false,
     });
   }
 
@@ -48,9 +52,24 @@ class Login extends React.Component {
     }
   }
 
-  handleSwitch() {
+  handleSignUpSwitch() {
     const { isSignUp } = this.state;
-    this.setState({ isSignUp: !isSignUp });
+
+    if (!isSignUp) {
+      this.setState({ isSignUp: true, isDropdown: true });
+    } else {
+      this.setState({ isSignUp: false, isDropdown: false });
+    }
+  }
+
+  toggleLoginBox() {
+    const { isDropdown, isSignUp } = this.state;
+
+    if (!isSignUp) {
+      this.setState({ isDropdown: !isDropdown, isSignUp: false });
+    } else {
+      this.setState({ isDropdown: true, isSignUp: false });
+    }
   }
 
   handleLogOut() {
@@ -65,40 +84,50 @@ class Login extends React.Component {
       email,
       password,
       isSignUp,
+      isDropdown,
     } = this.state;
 
     if (user) {
       return (
-        <button type="button" onClick={this.handleLogOut}>
-          Log Out
-        </button>
+        <div className="login">
+          <button type="button" onClick={this.handleLogOut}>
+            Log Out
+          </button>
+        </div>
       );
     }
 
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="username">
-            Username
-            <input id="username" type="text" value={username} onChange={this.handleChange} />
-          </label>
-          {isSignUp && (
-            <label htmlFor="email">
-              Email
-              <input id="email" type="email" value={email} onChange={this.handleChange} />
-            </label>
-          )}
-          <label htmlFor="password">
-            Password
-            <input id="password" type="password" value={password} onChange={this.handleChange} />
-          </label>
-          <button type="submit">
-            Submit
-          </button>
-        </form>
-        <button type="button" onClick={this.handleSwitch}>
-          {isSignUp ? 'Log In' : 'Sign Up'}
+      <div className="login">
+        <button type="button" onClick={this.handleSignUpSwitch}>
+          {isSignUp ? 'Cancel' : 'Sign Up'}
         </button>
+        <button type="button" onClick={this.toggleLoginBox}>
+          Log In
+        </button>
+        <div className="login__wrapper">
+          {isDropdown && (
+            <form onSubmit={this.handleSubmit}>
+              <label htmlFor="username">
+                Username
+                <input id="username" type="text" value={username} onChange={this.handleChange} />
+              </label>
+              {isSignUp && (
+                <label htmlFor="email">
+                  Email
+                  <input id="email" type="email" value={email} onChange={this.handleChange} />
+                </label>
+              )}
+              <label htmlFor="password">
+                Password
+                <input id="password" type="password" value={password} onChange={this.handleChange} />
+              </label>
+              <button type="submit">
+                Submit
+              </button>
+            </form>
+          )}
+        </div>
       </div>
     );
   }

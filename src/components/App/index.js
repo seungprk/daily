@@ -17,13 +17,13 @@ class App extends React.Component {
     const today = new Date(Date.now());
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">
+        <header className="App__header">
+          <img src={logo} className="App__logo" alt="logo" />
+          <h1 className="App__title">
             Daily!
           </h1>
+          <LoginContainer />
         </header>
-        <LoginContainer />
         {user && (
           <div>
             <ControlsContainer />
