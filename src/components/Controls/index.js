@@ -35,12 +35,8 @@ class Controls extends React.Component {
 
   render() {
     const { text, isPlaceholder } = this.state;
-    const { copyYesterday } = this.props;
     return (
       <div className="controls">
-        <button type="button" onClick={copyYesterday}>
-          Copy from Yesterday
-        </button>
         <form onSubmit={this.handleSubmit}>
           <input
             className="controls__input"
@@ -59,7 +55,6 @@ class Controls extends React.Component {
 
 Controls.propTypes = {
   addTask: PropTypes.func.isRequired,
-  copyYesterday: PropTypes.func.isRequired,
 };
 
 export default Controls;
