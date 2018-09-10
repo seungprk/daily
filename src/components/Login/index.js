@@ -13,11 +13,28 @@ class Login extends React.Component {
       isDropdown: false,
     };
 
+    this.dropdownRef = React.createRef();
+
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSignUpSwitch = this.handleSignUpSwitch.bind(this);
     this.handleLogOut = this.handleLogOut.bind(this);
     this.toggleLoginBox = this.toggleLoginBox.bind(this);
+    this.handleClickOutside = this.handleClickOutside.bind(this);
+  }
+
+  componentDidMount() {
+    document.addEventListener('mousedown', this.handleClickOutside);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside);
+  }
+
+  handleClickOutside(e) {
+    if (this.dropdownRef.current && !this.dropdownRef.current.contains(e.target)) {
+      this.setState({ isDropdown: false, isSignUp: false });
+    }
   }
 
   handleSubmit(e) {
@@ -106,7 +123,7 @@ class Login extends React.Component {
           Log In
         </button>
         {isDropdown && (
-          <div className="login__dropdown">
+          <div className="login__dropdown" ref={this.dropdownRef}>
             <form onSubmit={this.handleSubmit}>
               <input
                 className="login__input"
