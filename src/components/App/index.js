@@ -16,18 +16,20 @@ class App extends React.Component {
     const { user } = this.props;
     const today = new Date(Date.now());
     return (
-      <div className="App">
-        <header className="App__header">
-          <img src={logo} className="App__logo" alt="logo" />
-          <h1 className="App__title">
+      <div>
+        <header className="header">
+          <img src={logo} className="logo" alt="logo" />
+          <h1 className="title">
             Daily!
           </h1>
           <LoginContainer />
         </header>
         {user && (
           <div>
-            <ControlsContainer />
             <TaskListContainer targetDate={today} />
+            <footer className="footer">
+              <ControlsContainer />
+            </footer>
           </div>
         )}
       </div>

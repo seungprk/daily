@@ -2,16 +2,13 @@ body {
   background-color: #F3F1EC;
 }
 
-.App {
-}
-
-.App__logo {
+.logo {
   vertical-align: middle;
   height: 1.5em;
   animation: App-logo-spin infinite 20s linear;
 }
 
-.App__header {
+.header {
   display: flex;
   align-items: center;
   background-color: #AF7E68;
@@ -19,7 +16,13 @@ body {
   color: #492B22;
 }
 
-.App__title {
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.title {
   display: inline;
   vertical-align: middle;
   font-size: 1.5em;
