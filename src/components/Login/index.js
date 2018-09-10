@@ -90,7 +90,7 @@ class Login extends React.Component {
     if (user) {
       return (
         <div className="login">
-          <button type="button" onClick={this.handleLogOut}>
+          <button className="login__button" type="button" onClick={this.handleLogOut}>
             Log Out
           </button>
         </div>
@@ -99,35 +99,47 @@ class Login extends React.Component {
 
     return (
       <div className="login">
-        <button type="button" onClick={this.handleSignUpSwitch}>
-          {isSignUp ? 'Cancel' : 'Sign Up'}
+        <button className="login__button" type="button" onClick={this.handleSignUpSwitch}>
+          Sign Up
         </button>
-        <button type="button" onClick={this.toggleLoginBox}>
+        <button className="login__button" type="button" onClick={this.toggleLoginBox}>
           Log In
         </button>
-        <div className="login__wrapper">
-          {isDropdown && (
+        {isDropdown && (
+          <div className="login__dropdown">
             <form onSubmit={this.handleSubmit}>
-              <label htmlFor="username">
-                Username
-                <input id="username" type="text" value={username} onChange={this.handleChange} />
-              </label>
+              <input
+                className="login__input"
+                id="username"
+                type="text"
+                value={username}
+                placeHolder="Username"
+                onChange={this.handleChange}
+              />
               {isSignUp && (
-                <label htmlFor="email">
-                  Email
-                  <input id="email" type="email" value={email} onChange={this.handleChange} />
-                </label>
+                <input
+                  className="login__input"
+                  id="email"
+                  type="email"
+                  value={email}
+                  placeHolder="Email"
+                  onChange={this.handleChange}
+                />
               )}
-              <label htmlFor="password">
-                Password
-                <input id="password" type="password" value={password} onChange={this.handleChange} />
-              </label>
-              <button type="submit">
+              <input
+                className="login__input"
+                id="password"
+                type="password"
+                value={password}
+                placeHolder="Password"
+                onChange={this.handleChange}
+              />
+              <button className="login__submit" type="submit">
                 Submit
               </button>
             </form>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     );
   }
