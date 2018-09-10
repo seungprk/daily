@@ -13,24 +13,27 @@ const TaskListItem = (props) => {
   const hasCounter = task.subListItems.length > 0;
   const completedCount = task.subListItems.reduce((sum, item) => item.completed + sum, 0);
 
-  const textClass = task.completed ? 'task-list-item--done' : '';
+  let textClass = 'task-list-item__text';
+  if (task.completed) textClass += '--done';
   return (
     <div>
-      <span className={textClass}>
-        {task.text}
-      </span>
-      {hasCounter ? (
+      <div className="task-list-item">
         <span className={textClass}>
-          {`${completedCount} / ${task.subListItems.length}`}
+          {task.text}
         </span>
-      ) : null}
-      <button type="button" onClick={toggleTask}>
-        Done
-      </button>
-      <button type="button" onClick={deleteTask}>
-        Delete
-      </button>
-      <SubListContainer task={task} />
+        {hasCounter ? (
+          <span className={textClass}>
+            {`${completedCount} / ${task.subListItems.length}`}
+          </span>
+        ) : null}
+        <button type="button" onClick={toggleTask}>
+          Done
+        </button>
+        <button type="button" onClick={deleteTask}>
+          Delete
+        </button>
+        <SubListContainer task={task} />
+      </div>
     </div>
   );
 };
