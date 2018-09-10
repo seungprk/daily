@@ -42,7 +42,7 @@ class Controls extends React.Component {
             className="controls__input"
             type="text"
             value={text}
-            placeholder={isPlaceholder && 'Add a New Task'}
+            placeholder={isPlaceholder ? 'Add a New Task' : null}
             onFocus={this.togglePlaceholder}
             onBlur={this.togglePlaceholder}
             onChange={this.handleChange}
