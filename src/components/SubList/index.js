@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SubListItemContainer from '../SubListItem/container';
+import './style.css';
 
 class SubList extends React.Component {
   constructor(props) {
@@ -40,16 +41,16 @@ class SubList extends React.Component {
     const { value, isAdd } = this.state;
     const { subListItems } = task;
     return (
-      <div>
+      <div className="sub-list">
         {subListItems.map(item => <SubListItemContainer {...item} key={item.id} task={task} />)}
         <div>
           {isAdd ? (
             <form onSubmit={this.handleAdd}>
-              <input type="text" value={value} onChange={this.handleChange} />
+              <input className="sub-list__input" type="text" value={value} onChange={this.handleChange} />
             </form>
           ) : (
-            <button type="button" onClick={this.startAdd}>
-              Add New Item
+            <button className="sub-list__button" type="button" onClick={this.startAdd}>
+              + Add New Item
             </button>
           )}
         </div>

@@ -18,7 +18,7 @@ const TaskListItem = (props) => {
   return (
     <div>
       <div className="task-item">
-        <button className="task-item__button" type="button" onClick={toggleTask}>
+        <button className="task-item__button task-item__button--border" type="button" onClick={toggleTask}>
           {task.completed && (
             <svg className="task-item__icon" viewBox="0 0 40 40">
               <path className="task-item__path" fill="none" d="M 10,25 L 15,30 M 15,30 L 30,15" />

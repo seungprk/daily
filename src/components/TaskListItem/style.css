@@ -1,7 +1,7 @@
 .task-item {
   display: inline-block;
   margin-top: 0.5em;
-  padding: 1em;
+  padding: 0.5em;
   vertical-align: middle;
   border: 1px solid lightgrey;
   border-radius: 10px;
@@ -10,6 +10,7 @@
 
 .task-item__text {
   margin: 0 0.5em;
+  vertical-align: middle;
 }
 
 .task-item__text--done {
@@ -22,9 +23,14 @@
   vertical-align: middle;
   width: 1.5em;
   height: 1.5em;
-  border: 1px solid lightgray;
+  border: none;
   color: lightgray;
   cursor: pointer;
+}
+
+.task-item__button--border {
+  border: 1px solid lightgray;
+  border-radius: 3px;
 }
 
 .task-item__icon {
