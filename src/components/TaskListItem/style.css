@@ -1,13 +1,40 @@
-.task-list-item {
+.task-item {
   display: inline-block;
   margin-top: 0.5em;
   padding: 1em;
+  vertical-align: middle;
   border: 1px solid lightgrey;
   border-radius: 10px;
   background-color: white;
 }
 
-.task-list-item__text--done {
+.task-item__text {
+  margin: 0 0.5em;
+}
+
+.task-item__text--done {
   text-decoration: line-through;
   opacity: 0.5;
+}
+
+.task-item__button {
+  padding: 0;
+  vertical-align: middle;
+  width: 1.5em;
+  height: 1.5em;
+  border: 1px solid lightgray;
+  color: lightgray;
+  cursor: pointer;
+}
+
+.task-item__icon {
+  width: 100%;
+  height: 100%;
+}
+
+.task-item__path {
+  stroke: gray;
+  fill: transparent;
+  stroke-linecap: round;
+  stroke-width: 5;
 }

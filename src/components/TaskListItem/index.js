@@ -13,11 +13,18 @@ const TaskListItem = (props) => {
   const hasCounter = task.subListItems.length > 0;
   const completedCount = task.subListItems.reduce((sum, item) => item.completed + sum, 0);
 
-  let textClass = 'task-list-item__text';
-  if (task.completed) textClass += '--done';
+  let textClass = 'task-item__text';
+  if (task.completed) textClass += ' task-item__text--done';
   return (
     <div>
-      <div className="task-list-item">
+      <div className="task-item">
+        <button className="task-item__button" type="button" onClick={toggleTask}>
+          {task.completed && (
+            <svg className="task-item__icon" viewBox="0 0 40 40">
+              <path className="task-item__path" fill="none" d="M 10,25 L 15,30 M 15,30 L 30,15" />
+            </svg>
+          )}
+        </button>
         <span className={textClass}>
           {task.text}
         </span>
@@ -26,11 +33,10 @@ const TaskListItem = (props) => {
             {`${completedCount} / ${task.subListItems.length}`}
           </span>
         ) : null}
-        <button type="button" onClick={toggleTask}>
-          Done
-        </button>
-        <button type="button" onClick={deleteTask}>
-          Delete
+        <button className="task-item__button" type="button" onClick={deleteTask}>
+          <svg className="task-item__icon" viewBox="0 0 40 40">
+            <path className="task-item__path" d="M 10,10 L 30,30 M 30,10 L 10,30" />
+          </svg>
         </button>
         <SubListContainer task={task} />
       </div>
