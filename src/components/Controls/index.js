@@ -1,13 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './style.css';
 
 class Controls extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { text: '' };
+    this.state = {
+      text: '',
+      isPlaceholder: true,
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.togglePlaceholder = this.togglePlaceholder.bind(this);
   }
 
   handleSubmit(e) {
@@ -23,16 +28,25 @@ class Controls extends React.Component {
     this.setState({ text: e.target.value });
   }
 
+  togglePlaceholder() {
+    const { isPlaceholder } = this.state;
+    this.setState({ isPlaceholder: !isPlaceholder });
+  }
+
   render() {
-    const { text } = this.state;
-    const { copyYesterday } = this.props;
+    const { text, isPlaceholder } = this.state;
     return (
-      <div>
-        <button type="button" onClick={copyYesterday}>
-          Copy from Yesterday
-        </button>
+      <div className="controls">
         <form onSubmit={this.handleSubmit}>
-          <input type="text" value={text} onChange={this.handleChange} />
+          <input
+            className="controls__input"
+            type="text"
+            value={text}
+            placeholder={isPlaceholder ? 'Add a New Task' : null}
+            onFocus={this.togglePlaceholder}
+            onBlur={this.togglePlaceholder}
+            onChange={this.handleChange}
+          />
         </form>
       </div>
     );
@@ -41,7 +55,6 @@ class Controls extends React.Component {
 
 Controls.propTypes = {
   addTask: PropTypes.func.isRequired,
-  copyYesterday: PropTypes.func.isRequired,
 };
 
 export default Controls;

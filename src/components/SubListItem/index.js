@@ -9,18 +9,24 @@ const SubListItem = (props) => {
     deleteItem,
     toggleItem,
   } = props;
-  const textClass = completed ? 'sub-list-item--done' : '';
+  const textClass = completed ? 'sub-item__text sub-item__text--done' : 'sub-item__text';
 
   return (
-    <div>
-      <span className={textClass}>
-        {`- ${text}`}
-      </span>
-      <button type="button" onClick={toggleItem}>
-        Done
+    <div className="sub-item">
+      <button className="sub-item__button sub-item__button--check" type="button" onClick={toggleItem}>
+        {completed && (
+          <svg className="sub-item__icon" viewBox="0 0 40 40">
+            <path className="sub-item__path" fill="none" d="M 10,25 L 15,30 M 15,30 L 30,15" />
+          </svg>
+        )}
       </button>
-      <button type="button" onClick={deleteItem}>
-        Delete
+      <span className={textClass}>
+        {text}
+      </span>
+      <button className="sub-item__button sub-item__button--x" type="button" onClick={deleteItem}>
+        <svg className="sub-item__icon" viewBox="0 0 40 40">
+          <path className="sub-item__path" d="M 10,10 L 30,30 M 30,10 L 10,30" />
+        </svg>
       </button>
     </div>
   );

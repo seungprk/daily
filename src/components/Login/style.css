@@ -1,1 +1,41 @@
+.login {
+  margin-left: auto;
+}
 
+.login__dropdown {
+  position: absolute;
+  right: 1em;
+  margin-top: 0.5em;
+  padding: 2em;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.login__input {
+  display: block;
+  margin-bottom: 1.5em;
+  padding: 0.5em;
+  font-size: 14px;
+}
+
+.login__button {
+  height: 2em;
+  margin-left: 1em;
+  font-size: 1rem;
+  color: #af7e68;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.login__submit {
+  width: 100%;
+  padding: 0.5em;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  color: white;
+  background-color: #AF7E68;
+  cursor: pointer;
+}

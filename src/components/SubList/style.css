@@ -1,0 +1,23 @@
+.sub-list {
+  margin-top: 0.25em;
+}
+
+.sub-list__button {
+  display: inline-block;
+  padding: 0;
+  height: 2em;
+  border: none;
+  color: lightgray;
+  cursor: pointer;
+}
+
+.sub-list__form {
+  margin: 0.5em 1em 0;
+}
+
+.sub-list__input {
+  box-sizing: border-box;
+  height: 2em;
+  width: 100%;
+  padding: 0.25em;
+}

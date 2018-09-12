@@ -1,4 +1,57 @@
-.task-list-item--done {
+.task-item {
+  display: inline-block;
+  margin-top: 0.5em;
+  padding: 0.5em;
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.task-item__flex {
+  display: flex;
+}
+
+.task-item__text {
+  margin: 0 0.5em;
+}
+
+.task-item__text--done {
   text-decoration: line-through;
   opacity: 0.5;
+}
+
+.task-item__counter {
+  margin-right: 0.5em;
+  vertical-align: middle;
+}
+
+.task-item__button {
+  padding: 0;
+  width: 1.5em;
+  height: 1.5em;
+  border: none;
+  color: lightgray;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.task-item__button--border {
+  border: 1px solid lightgray;
+  border-radius: 3px;
+}
+
+.task-item__right-wrap {
+  margin-left: auto;
+}
+
+.task-item__icon {
+  width: 100%;
+  height: 100%;
+}
+
+.task-item__path {
+  stroke: gray;
+  fill: transparent;
+  stroke-linecap: round;
+  stroke-width: 5;
 }

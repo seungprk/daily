@@ -1,25 +1,32 @@
-.App {
-  text-align: center;
+body {
+  background-color: #F3F1EC;
 }
 
-.App-logo {
+.logo {
+  vertical-align: middle;
+  height: 1em;
+  margin-right: 0.5em;
   animation: App-logo-spin infinite 20s linear;
-  height: 80px;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.header {
+  display: flex;
+  padding: 0.75em 2em;
+  align-items: center;
+  color: #492B22;
 }
 
-.App-title {
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.title {
+  display: inline;
+  margin: 0;
+  vertical-align: middle;
   font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
 }
 
 @keyframes App-logo-spin {

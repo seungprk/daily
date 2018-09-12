@@ -19,11 +19,16 @@ router.use('/:userId/tasks', tasksRoute);
 router.post('/', (req, res) => {
   const { username, email, password } = req.body;
   User.create(username, email, password)
-    .catch((error) => {
-      console.error(error);
-      res.sendStatus(400);
-    })
-    .then(user => res.status(201).send(JSON.stringify(user)));
+    .then(
+      (user) => {
+        req.session.user = user;
+        res.status(201).send(JSON.stringify(user));
+      },
+      (error) => {
+        console.error(error);
+        res.sendStatus(400);
+      },
+    );
 });
 
 module.exports = router;
