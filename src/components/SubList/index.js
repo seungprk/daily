@@ -43,17 +43,15 @@ class SubList extends React.Component {
     return (
       <div className="sub-list">
         {subListItems.map(item => <SubListItemContainer {...item} key={item.id} task={task} />)}
-        <div>
-          {isAdd ? (
-            <form onSubmit={this.handleAdd}>
-              <input className="sub-list__input" type="text" value={value} onChange={this.handleChange} />
-            </form>
-          ) : (
-            <button className="sub-list__button" type="button" onClick={this.startAdd}>
-              + Add New Item
-            </button>
-          )}
-        </div>
+        {isAdd ? (
+          <form className="sub-list__form" onSubmit={this.handleAdd}>
+            <input className="sub-list__input" type="text" value={value} onChange={this.handleChange} />
+          </form>
+        ) : (
+          <button className="sub-list__button" type="button" onClick={this.startAdd}>
+            + Add New Item
+          </button>
+        )}
       </div>
     );
   }

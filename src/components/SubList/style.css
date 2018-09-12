@@ -11,6 +11,10 @@
   cursor: pointer;
 }
 
+.sub-list__form {
+  margin: 0.5em 1em 0;
+}
+
 .sub-list__input {
   box-sizing: border-box;
   height: 2em;
