@@ -29,16 +29,18 @@ const TaskListItem = (props) => {
           <span className={textClass}>
             {task.text}
           </span>
-          {hasCounter ? (
-            <span className="task-item__counter">
-              {`${completedCount} / ${task.subListItems.length}`}
-            </span>
-          ) : null}
-          <button className="task-item__button" type="button" onClick={deleteTask}>
-            <svg className="task-item__icon" viewBox="0 0 40 40">
-              <path className="task-item__path" d="M 10,10 L 30,30 M 30,10 L 10,30" />
-            </svg>
-          </button>
+          <div className="task-item__right-wrap">
+            {hasCounter ? (
+              <span className="task-item__counter">
+                {`${completedCount} / ${task.subListItems.length}`}
+              </span>
+            ) : null}
+            <button className="task-item__button" type="button" onClick={deleteTask}>
+              <svg className="task-item__icon" viewBox="0 0 40 40">
+                <path className="task-item__path" d="M 10,10 L 30,30 M 30,10 L 10,30" />
+              </svg>
+            </button>
+          </div>
         </div>
         <SubListContainer task={task} />
       </div>

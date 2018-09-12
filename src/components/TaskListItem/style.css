@@ -21,8 +21,8 @@
 }
 
 .task-item__counter {
-  margin-left: auto;
   margin-right: 0.5em;
+  vertical-align: middle;
 }
 
 .task-item__button {
@@ -31,12 +31,17 @@
   height: 1.5em;
   border: none;
   color: lightgray;
+  vertical-align: middle;
   cursor: pointer;
 }
 
 .task-item__button--border {
   border: 1px solid lightgray;
   border-radius: 3px;
+}
+
+.task-item__right-wrap {
+  margin-left: auto;
 }
 
 .task-item__icon {
