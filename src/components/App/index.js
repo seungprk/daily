@@ -20,7 +20,7 @@ class App extends React.Component {
         <header className="header">
           <img src={logo} className="logo" alt="logo" />
           <h1 className="title">
-            Daily!
+            DAILY
           </h1>
           <LoginContainer />
         </header>
