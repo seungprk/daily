@@ -14,7 +14,10 @@ const loadTasks = (tasks) => {
 };
 
 export const getThenLoadTasks = userId => dispatch => getTasks(userId)
-  .then(tasks => dispatch(loadTasks(tasks)));
+  .then((tasks) => {
+    const tasksWithDateObj = tasks.map(task => ({ ...task, date: new Date(task.date) }));
+    dispatch(loadTasks(tasksWithDateObj));
+  });
 
 const postTasks = (tasks, userId) => fetch(`/users/${userId}/tasks`, {
   method: 'POST',
@@ -36,27 +39,6 @@ const addTasks = (tasks) => {
   return action;
 };
 
-export const postThenCopyTasks = (tasks, userId) => (dispatch) => {
-  const now = new Date(Date.now());
-  const newTasks = tasks.map(task => ({
-    ...task,
-    subListItems: [],
-    date: `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`,
-    completed: false,
-  }));
-
-  const handleSuccess = (taskIds) => {
-    const idTasks = newTasks.map((task, index) => ({ ...task, id: taskIds[index] }));
-    dispatch(addTasks(idTasks));
-  };
-
-  return postTasks(newTasks, userId)
-    .then(
-      handleSuccess,
-      error => alert(error),
-    );
-};
-
 export const postThenAddTask = (text, userId) => (dispatch) => {
   const now = new Date(Date.now());
   const task = {
@@ -68,6 +50,7 @@ export const postThenAddTask = (text, userId) => (dispatch) => {
 
   const handleSuccess = (taskIds) => {
     [task.id] = taskIds;
+    task.date = now;
     dispatch(addTasks([task]));
   };
 
