@@ -4,8 +4,13 @@ import { postThenCopyTasks } from '../../actions/tasks';
 
 const mapStateToProps = (state, ownProps) => {
   const tasks = state.tasks.filter((task) => {
-    const taskDateStr = new Date(task.date).toDateString();
-    return taskDateStr === ownProps.targetDate.toDateString();
+    const target = ownProps.targetDate;
+    const date = new Date(task.date);
+    return (
+      target.getFullYear() === date.getFullYear()
+      && target.getMonth() === date.getMonth()
+      && target.getDate() === date.getDate()
+    );
   });
 
   return {

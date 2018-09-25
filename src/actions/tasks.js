@@ -14,7 +14,10 @@ const loadTasks = (tasks) => {
 };
 
 export const getThenLoadTasks = userId => dispatch => getTasks(userId)
-  .then(tasks => dispatch(loadTasks(tasks)));
+  .then((tasks) => {
+    const tasksWithDateObj = tasks.map(task => ({ ...task, date: new Date(task.date) }));
+    dispatch(loadTasks(tasksWithDateObj));
+  });
 
 const postTasks = (tasks, userId) => fetch(`/users/${userId}/tasks`, {
   method: 'POST',
@@ -68,6 +71,7 @@ export const postThenAddTask = (text, userId) => (dispatch) => {
 
   const handleSuccess = (taskIds) => {
     [task.id] = taskIds;
+    task.date = now;
     dispatch(addTasks([task]));
   };
 
