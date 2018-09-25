@@ -2,3 +2,8 @@
   text-align: center;
   padding-bottom: 3.5rem;
 }
+
+.task-list__empty {
+  margin-top: 1em;
+  opacity: 0.5;
+}

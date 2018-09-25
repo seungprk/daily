@@ -39,27 +39,6 @@ const addTasks = (tasks) => {
   return action;
 };
 
-export const postThenCopyTasks = (tasks, userId) => (dispatch) => {
-  const now = new Date(Date.now());
-  const newTasks = tasks.map(task => ({
-    ...task,
-    subListItems: [],
-    date: `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`,
-    completed: false,
-  }));
-
-  const handleSuccess = (taskIds) => {
-    const idTasks = newTasks.map((task, index) => ({ ...task, id: taskIds[index] }));
-    dispatch(addTasks(idTasks));
-  };
-
-  return postTasks(newTasks, userId)
-    .then(
-      handleSuccess,
-      error => alert(error),
-    );
-};
-
 export const postThenAddTask = (text, userId) => (dispatch) => {
   const now = new Date(Date.now());
   const task = {
